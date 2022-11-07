@@ -17,7 +17,7 @@ public class Brightness implements ImageTransformation {
    * Constructs a new brightness transformation macro object that transforms an image to be brighter
    * by the given amount if positive, or darker by the given amount if negative.
    *
-   * @param amount the channel to visualize in the transformed image
+   * @param amount the amount to brighten or darken an image
    * @throws IllegalArgumentException if the given amount is not positive or negative
    */
   public Brightness(int amount) throws IllegalArgumentException {
