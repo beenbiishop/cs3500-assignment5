@@ -23,16 +23,17 @@ public class VisualizeCmd implements ImageProcessorCmd {
   private final String newFileName;
 
   /**
-   * Constructs a Visual command.
+   * Constructs a Visualize command.
    *
    * @param view        the view to display the messages to.
    * @param store       the store to store images in.
    * @param channel     the enum that represents which visualize transformation to perform.
    * @param fileName    the file name of the image to be transformed.
    * @param newFileName the file name of the new transformed image.
+   * @throws IllegalArgumentException if any of the parameters are null.
    */
   public VisualizeCmd(ImageProcessorView view, StoredImages store, Channel channel, String fileName,
-      String newFileName) {
+      String newFileName) throws IllegalArgumentException {
     if (view == null || store == null || channel == null) {
       throw new IllegalArgumentException("View, store, and channel cannot be null");
     }

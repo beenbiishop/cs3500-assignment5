@@ -4,16 +4,14 @@ import controller.ImageProcessorCmd;
 import model.Image;
 import model.ImageTransformation;
 import model.StoredImages;
-import model.transformations.HorizontalFlip;
+import model.transformations.Blur;
 import view.ImageProcessorView;
 
 /**
- * Class that represents a command, "Horizontal Flip", that the processor can handle. Implements the
- * {@code ImageProcessorCmd} interface and execute the command. Flips the image along the horizontal
- * axis.
+ * Class that represents a command, "Blur", that the processor can handle. Implements the
+ * {@code ImageProcessorCmd} interface and execute the command. Blurs the image.
  */
-
-public class HorizontalFlipCmd implements ImageProcessorCmd {
+public class BlurCmd implements ImageProcessorCmd {
 
   private final ImageProcessorView view;
   private final StoredImages store;
@@ -21,7 +19,7 @@ public class HorizontalFlipCmd implements ImageProcessorCmd {
   private final String newFileName;
 
   /**
-   * Constructs a Horizontal Flip command.
+   * Constructs a Blur command.
    *
    * @param view        the view to display the messages to.
    * @param store       the store to store images in.
@@ -29,8 +27,8 @@ public class HorizontalFlipCmd implements ImageProcessorCmd {
    * @param newFileName the file name of the new transformed image.
    * @throws IllegalArgumentException if any of the parameters are null.
    */
-  public HorizontalFlipCmd(ImageProcessorView view, StoredImages store, String fileName,
-      String newFileName) throws IllegalArgumentException {
+  public BlurCmd(ImageProcessorView view, StoredImages store, String fileName, String newFileName)
+      throws IllegalArgumentException {
     if (view == null || store == null || fileName == null || newFileName == null) {
       throw new IllegalArgumentException("View, store, and file names cannot be null");
     }
@@ -40,16 +38,14 @@ public class HorizontalFlipCmd implements ImageProcessorCmd {
     this.newFileName = newFileName.toLowerCase();
   }
 
-
   @Override
   public void execute() {
     Image retrieved = this.store.retrieve(this.fileName);
-    ImageTransformation flip = new HorizontalFlip();
-    Image processed = flip.transform(retrieved);
+    ImageTransformation blur = new Blur();
+    Image processed = blur.transform(retrieved);
     this.store.add(this.newFileName, processed, true);
     this.view.renderMessage(
-        "Horizontally flipped \"" + this.fileName + "\" and saved as \"" + this.newFileName + "\""
+        "Blurred \"" + this.fileName + "\" and saved as \"" + this.newFileName + "\""
             + System.lineSeparator() + "Command: ");
   }
-
 }

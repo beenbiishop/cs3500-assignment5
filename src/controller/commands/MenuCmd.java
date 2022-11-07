@@ -15,8 +15,9 @@ public class MenuCmd implements ImageProcessorCmd {
    * Constructs a Menu command.
    *
    * @param view the view to display the menu to.
+   * @throws IllegalArgumentException if the view is null.
    */
-  public MenuCmd(ImageProcessorView view) {
+  public MenuCmd(ImageProcessorView view) throws IllegalArgumentException {
     if (view == null) {
       throw new IllegalArgumentException("View cannot be null");
     }

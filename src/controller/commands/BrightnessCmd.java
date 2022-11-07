@@ -28,9 +28,10 @@ public class BrightnessCmd implements ImageProcessorCmd {
    * @param amount      how much to brighten or darken the image by.
    * @param fileName    the file name of the image to be transformed.
    * @param newFileName the file name of the new transformed image.
+   * @throws IllegalArgumentException if any of the parameters are null.
    */
   public BrightnessCmd(ImageProcessorView view, StoredImages store, int amount, String fileName,
-      String newFileName) {
+      String newFileName) throws IllegalArgumentException {
     if (view == null || store == null || fileName == null || newFileName == null) {
       throw new IllegalArgumentException("View, store, and file names cannot be null");
     }

@@ -26,6 +26,7 @@ public class LoadCmd implements ImageProcessorCmd {
    * @param store    the store to retrieve images from.
    * @param path     the file path of the image to be loaded.
    * @param fileName the file name of the image to be added.
+   * @throws IllegalArgumentException if any of the parameters are null.
    */
   public LoadCmd(ImageProcessorView view, StoredImages store, String path, String fileName) {
     if (view == null || store == null) {

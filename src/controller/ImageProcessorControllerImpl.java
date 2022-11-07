@@ -1,5 +1,6 @@
 package controller;
 
+import controller.commands.BlurCmd;
 import controller.commands.BrightnessCmd;
 import controller.commands.HorizontalFlipCmd;
 import controller.commands.LoadCmd;
@@ -44,6 +45,7 @@ import view.ImageProcessorView;
  * image with the new image.
  * </p>
  */
+// TODO: Update JavaDoc with new commands
 public class ImageProcessorControllerImpl implements ImageProcessorController {
 
   private final ImageProcessorView view;
@@ -103,6 +105,7 @@ public class ImageProcessorControllerImpl implements ImageProcessorController {
    * Adds all supported commands and the lambda functions to create the command objects to this
    * controller object's map of valid commands.
    */
+  // TODO: Add to readme added commands
   private void addCommands() {
     this.commands.put("menu", (Scanner s) -> new MenuCmd(this.view));
     this.commands.put("load",
@@ -131,6 +134,8 @@ public class ImageProcessorControllerImpl implements ImageProcessorController {
         (Scanner s) -> new HorizontalFlipCmd(this.view, this.store, s.next(), s.next()));
     this.commands.put("vertical-flip",
         (Scanner s) -> new VerticalFlipCmd(this.view, this.store, s.next(), s.next()));
+    this.commands.put("blur",
+        (Scanner s) -> new BlurCmd(this.view, this.store, s.next(), s.next()));
   }
 
 }

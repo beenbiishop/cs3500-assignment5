@@ -25,8 +25,10 @@ public class SaveCmd implements ImageProcessorCmd {
    * @param store    the store to store images in.
    * @param path     the file path of the image to be saved.
    * @param fileName the file name of the image to be retrieved.
+   * @throws IllegalArgumentException if any of the parameters are null.
    */
-  public SaveCmd(ImageProcessorView view, StoredImages store, String path, String fileName) {
+  public SaveCmd(ImageProcessorView view, StoredImages store, String path, String fileName)
+      throws IllegalArgumentException {
     if (view == null || store == null || path == null || fileName == null) {
       throw new IllegalArgumentException("View, store, path, and file name cannot be null");
     }
