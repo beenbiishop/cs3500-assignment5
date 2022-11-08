@@ -9,6 +9,7 @@ import model.ImageTransformation;
  * An implementation of the {@link ImageTransformation} interface representing a macro used to blur
  * an image.
  */
+// TODO: Abstract blur and sharpen into a single class
 public class Blur implements ImageTransformation {
 
   private static final double[][] BLUR_KERNEL = {{1.0 / 16.0, 1.0 / 8.0, 1.0 / 16.0},
