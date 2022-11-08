@@ -18,32 +18,15 @@ import model.transformations.Visualize.Channel;
 import view.ImageProcessorView;
 
 /**
- * Implements the {@code ImageProcessorController} interface supporting the following commands.
- *
- * <ul>
- *   <li>"quit" - quits the program and discards loaded images</li>
- *   <li>"menu" - outputs the menu with supported commands to the user</li>
- *   <li>"load {@code <image file path>} {@code <name to load as>}" - loads a new image into the
- *   image processor"</li>
- *   <li>"save {@code <output file path>} {@code <name of image to save>}" - saves a loaded image
- *   to an output file"</li>
- *   <li>"visualize-{@code <value to visualize (red, blue, green, value, intensity, luma)>}
- *   {@code <name of image to transform>} {@code <name of new transformed image>}" - applies a
- *   visualization transformation to an image "</li>
- *   <li>"brighten {@code <integer to brighten by>} {@code <name of image to transform>}
- *   {@code <name of new transformed image>}" - applies a brighten transformation to an image"</li>
- *   <li>"darken {@code <integer to darken by>} {@code <name of image to transform>}
- *  {@code <name of new transformed image>}" - applies a darken transformation to an image"</li>
- *  <li>"horizontal-flip {@code <name of image to transform>}
- *  {@code <name of new transformed image>}" - applies a horizontal flip
- *  transformation to an image"</li>
- *  <li>"vertical-flip {@code <name of image to transform>} {@code <name of new transformed image>}"
- *  - applies a vertical flip transformation to an image"</li>
- * </ul>
+ * Implements the {@code ImageProcessorController} interface supporting the image processor. As the
+ * user inputs commands, the controller validates the parameters and executes them. The controller
+ * also handles the exceptions thrown by the model and view, and displays them as messages to the
+ * user via the view.
  *
  * <p>
  * If an image name already exists in the image processor, the command will overwrite the existing
- * image with the new image.
+ * image with the new image. If a file already exists with the same file path as the new image, the
+ * command will overwrite the existing file with the new image.
  * </p>
  */
 // TODO: Update JavaDoc with new commands
