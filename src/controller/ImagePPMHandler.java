@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Scanner;
 import model.Image;
@@ -18,10 +19,11 @@ public class ImagePPMHandler implements ImageFileHandler {
 
   @Override
   public Image process(String path) throws IllegalArgumentException {
+    FileInputStream file;
     Scanner scan;
 
     try {
-      scan = new Scanner(new FileInputStream(path));
+      scan = new Scanner(file = new FileInputStream(path));
     } catch (FileNotFoundException e) {
       throw new IllegalArgumentException("File \"" + path + "\" not found");
     }
@@ -34,6 +36,12 @@ public class ImagePPMHandler implements ImageFileHandler {
         sb.append(s);
         sb.append(System.lineSeparator());
       }
+    }
+
+    try {
+      file.close();
+    } catch (IOException e) {
+      throw new IllegalArgumentException("File \"" + path + "\" not found");
     }
 
     scan = new Scanner(sb.toString());
@@ -71,7 +79,7 @@ public class ImagePPMHandler implements ImageFileHandler {
   public void export(Image image, String path) throws IllegalArgumentException {
     BufferedWriter writer;
 
-    if (image == null) {
+    if (image == null || path == null) {
       throw new IllegalArgumentException("Image and path cannot be null");
     }
 
