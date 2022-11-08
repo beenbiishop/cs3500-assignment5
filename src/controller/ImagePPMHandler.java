@@ -64,6 +64,7 @@ public class ImagePPMHandler implements ImageFileHandler {
       }
     }
 
+    scan.close();
     return new ImageImpl(pixels);
   }
 
@@ -71,7 +72,7 @@ public class ImagePPMHandler implements ImageFileHandler {
   public void export(Image image, String path) throws IllegalArgumentException {
     BufferedWriter writer;
 
-    if (image == null) {
+    if (image == null || path == null) {
       throw new IllegalArgumentException("Image and path cannot be null");
     }
 
