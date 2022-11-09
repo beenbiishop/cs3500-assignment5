@@ -1,14 +1,12 @@
 package controller;
 
-import controller.commands.BlurCmd;
 import controller.commands.BrightnessCmd;
-import controller.commands.GreyscaleCmd;
+import controller.commands.FilterCmd;
+import controller.commands.FilterCmd.FilterType;
 import controller.commands.HorizontalFlipCmd;
 import controller.commands.LoadCmd;
 import controller.commands.MenuCmd;
 import controller.commands.SaveCmd;
-import controller.commands.SepiaCmd;
-import controller.commands.SharpenCmd;
 import controller.commands.VerticalFlipCmd;
 import controller.commands.VisualizeCmd;
 import java.util.HashMap;
@@ -121,13 +119,15 @@ public class ImageProcessorControllerImpl implements ImageProcessorController {
     this.commands.put("vertical-flip",
         (Scanner s) -> new VerticalFlipCmd(this.view, this.store, s.next(), s.next()));
     this.commands.put("blur",
-        (Scanner s) -> new BlurCmd(this.view, this.store, s.next(), s.next()));
+        (Scanner s) -> new FilterCmd(this.view, this.store, FilterType.Blur, s.next(), s.next()));
     this.commands.put("sharpen",
-        (Scanner s) -> new SharpenCmd(this.view, this.store, s.next(), s.next()));
+        (Scanner s) -> new FilterCmd(this.view, this.store, FilterType.Sharpen, s.next(),
+            s.next()));
     this.commands.put("greyscale",
-        (Scanner s) -> new GreyscaleCmd(this.view, this.store, s.next(), s.next()));
+        (Scanner s) -> new FilterCmd(this.view, this.store, FilterType.Greyscale, s.next(),
+            s.next()));
     this.commands.put("sepia",
-        (Scanner s) -> new SepiaCmd(this.view, this.store, s.next(), s.next()));
+        (Scanner s) -> new FilterCmd(this.view, this.store, FilterType.Sepia, s.next(), s.next()));
   }
 
 }

@@ -9,7 +9,6 @@ import model.ImageTransformation;
  * An implementation of the {@link ImageTransformation} interface representing a macro used to
  * filter an image to sepia.
  */
-// TODO: Abstract greyscale and sepia into a single transformation
 public class Sepia implements ImageTransformation {
 
   private static final double[][] SEPIA_FILTER = {{0.393, 0.769, 0.189}, {0.349, 0.686, 0.168},

@@ -9,7 +9,6 @@ import model.ImageTransformation;
  * An implementation of the {@link ImageTransformation} interface representing a macro used to
  * filter an image to greyscale.
  */
-// TODO: Abstract greyscale and sepia into a single transformation
 public class Greyscale implements ImageTransformation {
 
   private static final double[][] GREYSCALE_FILTER = {{0.2126, 0.7152, 0.0722},

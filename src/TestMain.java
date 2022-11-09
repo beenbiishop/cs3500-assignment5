@@ -1,7 +1,7 @@
 import controller.ImagePPMHandler;
 import model.Image;
 import model.ImageTransformation;
-import model.transformations.Greyscale;
+import model.transformations.Blur;
 
 /**
  * A temporary main class used for testing new image transformations. Will be deleted before
@@ -18,7 +18,7 @@ public class TestMain {
   public static void main(String[] args) {
 
     ImagePPMHandler handler = new ImagePPMHandler();
-    ImageTransformation transformation = new Greyscale();
+    ImageTransformation transformation = new Blur();
     Image image;
     Image transformed;
 
