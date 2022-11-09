@@ -13,7 +13,7 @@ public class ColorTransformation implements ImageTransformation {
           {0.2126, 0.7152, .0722}};
   private static final double[][] SEPIA_MATRIX = {{0.393, 0.769, 0.189}, {0.349, 0.686, .168},
           {0.272, 0.534, 0.131}};
-  private ColorTransformations transformation;
+  private final ColorTransformations transformation;
 
   public ColorTransformation(ColorTransformations transformation) {
     this.transformation = transformation;
@@ -57,10 +57,10 @@ public class ColorTransformation implements ImageTransformation {
 
     switch (transformation) {
       case Sepia:
-        for (int j = 0; j < 3; j++) {
-          redVal += (rgb[j] * SEPIA_MATRIX[0][j]);
-          greenVal += (rgb[j] * SEPIA_MATRIX[1][j]);
-          blueVal += (rgb[j] * SEPIA_MATRIX[2][j]);
+        for (int i = 0; i < 3; i++) {
+          redVal += (rgb[i] * SEPIA_MATRIX[0][i]);
+          greenVal += (rgb[i] * SEPIA_MATRIX[1][i]);
+          blueVal += (rgb[i] * SEPIA_MATRIX[2][i]);
         }
         break;
       case Greyscale:

@@ -66,6 +66,16 @@ public class ImageProcessorViewImpl implements ImageProcessorView {
             + " to a new image" + System.lineSeparator());
     this.renderMessage("* \"vertical-flip\" <filename> <new filename> - vertically flips an image"
         + " to a new image" + System.lineSeparator());
+
+    this.renderMessage("* \"blur\" <filename> <new filename> - blurs an image"
+            + " to a new image" + System.lineSeparator());
+    this.renderMessage("* \"sharpen\" <filename> <new filename> - sharpens an image"
+            + " to a new image" + System.lineSeparator());
+    this.renderMessage("* \"greyscale\" <filename> <new filename> - transforms an image to a new"
+            + " greyscale image" + System.lineSeparator());
+    this.renderMessage("* \"sepia\" <filename> <new filename> - transforms an image to a new"
+            + " sepia toned image" + System.lineSeparator());
+
   }
 
 }

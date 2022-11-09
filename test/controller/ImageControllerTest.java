@@ -508,17 +508,18 @@ public class ImageControllerTest {
     Color[][] newPixels = new Color[3][3];
     for (int i = 0; i < newPixels.length; i++) {
       for (int j = 0; j < newPixels[0].length; j++) {
-        newPixels[0][0] = new Color(53, 53, 53);
-        newPixels[0][1] = new Color(51, 51, 51);
-        newPixels[0][2] = new Color(50, 50, 50);
 
-        newPixels[1][0] = new Color(51, 51, 51);
-        newPixels[1][1] = new Color(48, 48, 48);
-        newPixels[1][2] = new Color(45, 45, 45);
+        newPixels[0][0] = new Color(102, 90, 70);
+        newPixels[0][1] = new Color(98, 86, 68);
+        newPixels[0][2] = new Color(95, 85, 66);
 
-        newPixels[2][0] = new Color(50, 50, 50);
-        newPixels[2][1] = new Color(45, 45, 45);
-        newPixels[2][2] = new Color(40, 40, 40);
+        newPixels[1][0] = new Color(98, 86, 68);
+        newPixels[1][1] = new Color(93, 82, 64);
+        newPixels[1][2] = new Color(88, 79, 60);
+
+        newPixels[2][0] = new Color(95, 85, 66);
+        newPixels[2][1] = new Color(88, 79, 60);
+        newPixels[2][2] = new Color(79, 71, 55);
 
       }
     }

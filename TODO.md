@@ -25,13 +25,7 @@
 3. [ ] Write tests for ImageIOHandler class
 4. [ ] Write tests for Blur command
 5. [ ] Write tests for Sharpen command
-6. [ ] Implement Greyscale command
-7. [ ] Write tests for Greyscale command
-8. [ ] Implement Sepia command
-9. [ ] Write tests for Sepia command
-10. [ ] Update javadoc to include new commands
+8. [ ] Write tests for Sepia command
 
 ## View
 
-1. [ ] Update menu command to include blur and sharpen
-2. [ ] Update menu command to include greyscale and sepia

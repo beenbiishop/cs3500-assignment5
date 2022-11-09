@@ -2,16 +2,20 @@ package controller;
 
 import controller.commands.BlurCmd;
 import controller.commands.BrightnessCmd;
+import controller.commands.GreyscaleCmd;
 import controller.commands.HorizontalFlipCmd;
 import controller.commands.LoadCmd;
 import controller.commands.MenuCmd;
 import controller.commands.SaveCmd;
+import controller.commands.SepiaCmd;
 import controller.commands.VerticalFlipCmd;
 import controller.commands.VisualizeCmd;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Function;
+
 import model.StoredImages;
 import model.transformations.Visualize.Channel;
 import view.ImageProcessorView;
@@ -38,6 +42,14 @@ import view.ImageProcessorView;
  *  transformation to an image"</li>
  *  <li>"vertical-flip {@code <name of image to transform>} {@code <name of new transformed image>}"
  *  - applies a vertical flip transformation to an image"</li>
+ *  <li>"blur {@code <name of image to transform>} {@code <name of new transformed image>}"
+ *  - applies a blur transformation to an image"</li>
+ *  <li>"greyscale {@code <name of image to transform>} {@code <name of new transformed image>}"
+ *  - applies a greyscale color transformation to an image"</li>
+ *  <li>"sepia {@code <name of image to transform>} {@code <name of new transformed image>}"
+ *  - applies a sepia color transformation to an image"</li>
+ *  <li>"sharpen {@code <name of image to transform>} {@code <name of new transformed image>}"
+ *  - applies a sharpen transformation to an image"</li>
  * </ul>
  *
  * <p>
@@ -64,7 +76,7 @@ public class ImageProcessorControllerImpl implements ImageProcessorController {
    * @throws IllegalArgumentException if any of the parameters are null
    */
   public ImageProcessorControllerImpl(Readable input, ImageProcessorView view, StoredImages store)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     if (input == null || view == null || store == null) {
       throw new IllegalArgumentException("Input, view, and store cannot be null");
     }
@@ -95,7 +107,7 @@ public class ImageProcessorControllerImpl implements ImageProcessorController {
           }
         } catch (IllegalArgumentException e) {
           this.view.renderMessage(
-              "Error: " + e.getMessage() + System.lineSeparator() + "Command: ");
+                  "Error: " + e.getMessage() + System.lineSeparator() + "Command: ");
         }
       }
     }
@@ -109,33 +121,37 @@ public class ImageProcessorControllerImpl implements ImageProcessorController {
   private void addCommands() {
     this.commands.put("menu", (Scanner s) -> new MenuCmd(this.view));
     this.commands.put("load",
-        (Scanner s) -> new LoadCmd(this.view, this.store, s.next(), s.next()));
+            (Scanner s) -> new LoadCmd(this.view, this.store, s.next(), s.next()));
     this.commands.put("save",
-        (Scanner s) -> new SaveCmd(this.view, this.store, s.next(), s.next()));
+            (Scanner s) -> new SaveCmd(this.view, this.store, s.next(), s.next()));
     this.commands.put("visualize-red",
-        (Scanner s) -> new VisualizeCmd(this.view, this.store, Channel.Red, s.next(), s.next()));
+            (Scanner s) -> new VisualizeCmd(this.view, this.store, Channel.Red, s.next(), s.next()));
     this.commands.put("visualize-green",
-        (Scanner s) -> new VisualizeCmd(this.view, this.store, Channel.Green, s.next(), s.next()));
+            (Scanner s) -> new VisualizeCmd(this.view, this.store, Channel.Green, s.next(), s.next()));
     this.commands.put("visualize-blue",
-        (Scanner s) -> new VisualizeCmd(this.view, this.store, Channel.Blue, s.next(), s.next()));
+            (Scanner s) -> new VisualizeCmd(this.view, this.store, Channel.Blue, s.next(), s.next()));
     this.commands.put("visualize-value",
-        (Scanner s) -> new VisualizeCmd(this.view, this.store, Channel.Value, s.next(), s.next()));
+            (Scanner s) -> new VisualizeCmd(this.view, this.store, Channel.Value, s.next(), s.next()));
     this.commands.put("visualize-intensity",
-        (Scanner s) -> new VisualizeCmd(this.view, this.store, Channel.Intensity, s.next(),
-            s.next()));
+            (Scanner s) -> new VisualizeCmd(this.view, this.store, Channel.Intensity, s.next(),
+                    s.next()));
     this.commands.put("visualize-luma",
-        (Scanner s) -> new VisualizeCmd(this.view, this.store, Channel.Luma, s.next(), s.next()));
+            (Scanner s) -> new VisualizeCmd(this.view, this.store, Channel.Luma, s.next(), s.next()));
     this.commands.put("brighten",
-        (Scanner s) -> new BrightnessCmd(this.view, this.store, s.nextInt(), s.next(), s.next()));
+            (Scanner s) -> new BrightnessCmd(this.view, this.store, s.nextInt(), s.next(), s.next()));
     this.commands.put("darken",
-        (Scanner s) -> new BrightnessCmd(this.view, this.store, (s.nextInt() * -1), s.next(),
-            s.next()));
+            (Scanner s) -> new BrightnessCmd(this.view, this.store, (s.nextInt() * -1), s.next(),
+                    s.next()));
     this.commands.put("horizontal-flip",
-        (Scanner s) -> new HorizontalFlipCmd(this.view, this.store, s.next(), s.next()));
+            (Scanner s) -> new HorizontalFlipCmd(this.view, this.store, s.next(), s.next()));
     this.commands.put("vertical-flip",
-        (Scanner s) -> new VerticalFlipCmd(this.view, this.store, s.next(), s.next()));
+            (Scanner s) -> new VerticalFlipCmd(this.view, this.store, s.next(), s.next()));
     this.commands.put("blur",
-        (Scanner s) -> new BlurCmd(this.view, this.store, s.next(), s.next()));
+            (Scanner s) -> new BlurCmd(this.view, this.store, s.next(), s.next()));
+    this.commands.put("greyscale",
+            (Scanner s) -> new GreyscaleCmd(this.view, this.store, s.next(), s.next()));
+    this.commands.put("sepia",
+            (Scanner s) -> new SepiaCmd(this.view, this.store, s.next(), s.next()));
   }
 
 }
