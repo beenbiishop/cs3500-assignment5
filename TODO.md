@@ -5,7 +5,6 @@
 1. [ ] Update the README.md file with a log of changes
 2. [ ] Redesign the diagram to match any new classes
 3. [ ] Generate example blurred and sharpened images
-4. [ ] Implement Greyscale and Sepia
 5. [ ] Abstract all 4 filters into one model method
 6. [ ] Support the ability to accept a script file as a command-line option.
     * _For example `-filename-of-script.txt`. If a valid file is provided, the program should run
@@ -16,16 +15,13 @@
 ## Model
 
 1. [ ] Write tests for Blur and Sharpen transformations
-2. [ ] Write tests for Greyscale and Sepia transformations
 
 ## Controller
 
 1. [ ] Write tests for loading/saving from different file types
 2. [ ] Write tests for loading as one file type and saving as another
 3. [ ] Write tests for ImageIOHandler class
-4. [ ] Write tests for Blur command
 5. [ ] Write tests for Sharpen command
-8. [ ] Write tests for Sepia command
 
 ## View
 
