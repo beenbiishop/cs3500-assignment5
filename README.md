@@ -10,8 +10,7 @@ The Image Processor allows a user to load in Image into the program, save it, an
 transformations such as:
 
 * Visualizing the red, blue, green, alpha, luma, or intensity channels of each pixel in an image as
-  a greyscale
-  image
+  a greyscale image
 * Vertically or horizontally flipping an image
 * Brightening or darkening an image
 
@@ -32,15 +31,12 @@ program.
 * "load" <path> <filename> - _loads an image (identified by given name) into the processor_
 * "save" <path> <filename> - _saves an image to an output file_
 * "visualize-`<component>`" `<filename>` `<new filename>` - _transforms an image to a new greyscale
-  image
-  using a chosen component_
+  image using a chosen component_
     * `<component>` can be "red", "green", "blue", "value", "intensity", or "luma"
 * "brighten" `<amount>` `<filename>` `<new filename>` - _transforms an image to a new image
-  brightened by
-  an amount_
+  brightened by an amount_
 * "darken" `<amount>` `<filename>` `<new filename>` - _transforms an image to a new image darkened
-  by an
-  amount_
+  by an amount_
 * "horizontal-flip" `<filename>` `<new filename>` - _horizontally flips an image to a new image_
 * "vertical-flip" `<filename>` `<new filename>` - _vertically flips an image to a new image_
 
@@ -55,31 +51,22 @@ Rosemary, and has been used with her permission.
 
 * Interfaces
     * `ImageProcessorController` : Represents a controller for the image processor. As the user
-      inputs
-      commands, the controller validates the parameters and executes them. The controller also
-      handles
-      the exceptions thrown by the model and view, and displays them as messages to the user via the
-      view.
+      inputs commands, the controller validates the parameters and executes them. The controller
+      also handles the exceptions thrown by the model and view, and displays them as messages to the
+      user via the view.
         * Implementations:
             * `ImageProcessorControllerImpl`: Implements the `ImageProcessorController` interface
-              supporting
-              the above transformation commands as well as `load`, `menu`, and `save`.
+              supporting the above transformation commands as well as `load`, `menu`, and `save`.
     * `ImageProcessorCmd` : Represents a supported command that the image processor can handle. The
       command is executed by calling the `execute` method, and implemented subclasses of this
-      interface
-      will handle the execution of the command
+      interface will handle the execution of the command
         * Implementations:
             * `LoadCmd` : Implements the `ImageProcessorCmd` and represents the `load` command
-              offered by the
-              processor.
+              offered by the processor.
                 * `MenuCmd` : Implements the `ImageProcessorCmd` and represents the `menu` command
-                  offered by
-                  the
-                  processor.
+                  offered by the processor.
                 * `SaveCmd` : Implements the `ImageProcessorCmd` and represents the `save` command
-                  offered by
-                  the
-                  processor.
+                  offered by the processor.
                 * `BrightnessCmd` : Implements the `ImageProcessorCmd` and represents the `brighten`
                   and `darken`
                   command offered by the processor.
@@ -87,8 +74,7 @@ Rosemary, and has been used with her permission.
                   the `horizontal-flip`
                   command offered by the processor.
                 * `VerticalFlipCmd` : Implements the `ImageProcessorCmd` and represents
-                  the `vertical-flip` command
-                  offered by the processor.
+                  the `vertical-flip` command offered by the processor.
                 * `VisualizeCmd` : Implements the `ImageProcessorCmd` and represents
                   the `visualize-<componenet>`
                   command offered by the processor.
@@ -103,27 +89,19 @@ Rosemary, and has been used with her permission.
     * `Image` : Represents an image and it's pixels.
         * Implementations:
             * `ImageImpl` : Implements the `Image` interface, each image is represented by a 2D
-              array of
-              colors.
+              array of colors.
     * `ImageTransformation` : Represents a macro that can be applied to an `Image` to transform its
       pixels in some way.
         * Implementations:
-            * `Brightness` : Implements the `ImageTransformation` interface and represents a
-              macro that adjusts
-              the brightness of an image, both up the scale and down.
+            * `Brightness` : Implements the `ImageTransformation` interface and represents a macro
+              that adjusts the brightness of an image, both up the scale and down.
                 * `HorizontalFlip` : Implements the `ImageTransformation` interface and represents a
-                  macro that
-                  flips
-                  an image along the horizontal axis.
-                * `VerticalFlip`: Implements the `ImageTransformation` interface and represents
-                  a macro that flips
-                  an
-                  image along the vertical axis.
+                  macro that flips an image along the horizontal axis.
+                * `VerticalFlip`: Implements the `ImageTransformation` interface and represents a
+                  macro that flips an image along the vertical axis.
                 * `Visualize` : Implements the `ImageTransformation` interface and represents a
-                  macro that
-                  transforms the images to visualize the greyscale image by one of the following
-                  color
-                  components : `visualize-red`, `visualize-blue`, `visualize-green`
+                  macro that transforms the images to visualize the greyscale image by one of the
+                  following color components : `visualize-red`, `visualize-blue`, `visualize-green`
                   , `visualize-value`,
                   `visualize-intensity`, `visualize-luma`.
 
@@ -131,8 +109,7 @@ Rosemary, and has been used with her permission.
       by the user, identified by the image's file name selected by the user.
         * Implementations:
             * StoredImagesImpl` : Implements the `StoredImages` interface. The stored images are
-              represented
-              by a Map<String, Image>, the string representing a fileName.
+              represented by a Map<String, Image>, the string representing a fileName.
 
 ### View
 
@@ -141,8 +118,7 @@ Rosemary, and has been used with her permission.
       methods that the controller can call to render the view.
         * Implementations:
             * `ImageProcessorViewImpl` : Implements the ImageProcessorView interface and it's
-              methods. Handles
-              appending all the messages from the controller to the user.
+              methods. Handles appending all the messages from the controller to the user.
 
 ### Main Class
 
@@ -154,5 +130,3 @@ Rosemary, and has been used with her permission.
 To more easily visualize these classes, we have provided a class diagram below:
 
 ![Class Diagram](diagram.png)
-
-

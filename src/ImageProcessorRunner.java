@@ -12,7 +12,7 @@ import view.ImageProcessorViewImpl;
 public final class ImageProcessorRunner {
 
   /**
-   * Initiates a new image processor intstance for the user.
+   * Initiates a new image processor instance for the user.
    */
   public static void main(String[] args) {
 

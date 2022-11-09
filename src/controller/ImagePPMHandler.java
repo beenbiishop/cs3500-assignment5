@@ -14,6 +14,7 @@ import model.ImageImpl;
  * Implements the {@code ImageFileHandler} interface for converting PPM image files into
  * {@code Image} objects, and vice versa.
  */
+// TODO: Document slight fixes (closing scanner, check if file is empty)
 public class ImagePPMHandler implements ImageFileHandler {
 
   @Override
@@ -41,7 +42,12 @@ public class ImagePPMHandler implements ImageFileHandler {
 
     String token;
 
-    token = scan.next();
+    if (scan.hasNext()) {
+      token = scan.next();
+    } else {
+      throw new IllegalArgumentException("Invalid PPM file: file is empty");
+    }
+
     if (!token.equals("P3")) {
       throw new IllegalArgumentException("Invalid PPM file: plain RAW file should begin with P3");
     }
