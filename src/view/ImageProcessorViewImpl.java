@@ -41,6 +41,7 @@ public class ImageProcessorViewImpl implements ImageProcessorView {
         + "Command: ");
   }
 
+  // TODO: note changes to menu to include new commands
   @Override
   public void renderMenu() throws IllegalStateException {
     this.renderMessage("Supported commands:" + System.lineSeparator());
@@ -66,6 +67,17 @@ public class ImageProcessorViewImpl implements ImageProcessorView {
             + " to a new image" + System.lineSeparator());
     this.renderMessage("* \"vertical-flip\" <filename> <new filename> - vertically flips an image"
         + " to a new image" + System.lineSeparator());
+    this.renderMessage(
+        "* \"greyscale\" <filename> <new filename> - transforms an image to a new greyscale"
+            + " filtered image" + System.lineSeparator());
+    this.renderMessage("* \"sepia\" <filename> <new filename> - transforms an image to a new sepia"
+        + " filtered image" + System.lineSeparator());
+    this.renderMessage(
+        "* \"blur\" <filename> <new filename> - transforms an image to a new blurred image"
+            + System.lineSeparator());
+    this.renderMessage(
+        "* \"sharpen\" <filename> <new filename> - transforms an image to a new sharpened image"
+            + System.lineSeparator());
   }
 
 }

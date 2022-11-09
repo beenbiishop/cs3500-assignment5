@@ -2,10 +2,12 @@ package controller;
 
 import controller.commands.BlurCmd;
 import controller.commands.BrightnessCmd;
+import controller.commands.GreyscaleCmd;
 import controller.commands.HorizontalFlipCmd;
 import controller.commands.LoadCmd;
 import controller.commands.MenuCmd;
 import controller.commands.SaveCmd;
+import controller.commands.SepiaCmd;
 import controller.commands.SharpenCmd;
 import controller.commands.VerticalFlipCmd;
 import controller.commands.VisualizeCmd;
@@ -122,6 +124,10 @@ public class ImageProcessorControllerImpl implements ImageProcessorController {
         (Scanner s) -> new BlurCmd(this.view, this.store, s.next(), s.next()));
     this.commands.put("sharpen",
         (Scanner s) -> new SharpenCmd(this.view, this.store, s.next(), s.next()));
+    this.commands.put("greyscale",
+        (Scanner s) -> new GreyscaleCmd(this.view, this.store, s.next(), s.next()));
+    this.commands.put("sepia",
+        (Scanner s) -> new SepiaCmd(this.view, this.store, s.next(), s.next()));
   }
 
 }

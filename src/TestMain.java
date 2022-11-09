@@ -1,7 +1,7 @@
 import controller.ImagePPMHandler;
 import model.Image;
 import model.ImageTransformation;
-import model.transformations.Sharpen;
+import model.transformations.Greyscale;
 
 /**
  * A temporary main class used for testing new image transformations. Will be deleted before
@@ -18,7 +18,7 @@ public class TestMain {
   public static void main(String[] args) {
 
     ImagePPMHandler handler = new ImagePPMHandler();
-    ImageTransformation transformation = new Sharpen();
+    ImageTransformation transformation = new Greyscale();
     Image image;
     Image transformed;
 
@@ -39,7 +39,7 @@ public class TestMain {
     }
 
     try {
-      handler.export(transformed, "res/ManhattanSharpen.ppm");
+      handler.export(transformed, "res/ManhattanGreyscale.ppm");
       System.out.println("Image exported successfully");
     } catch (Exception e) {
       System.out.println("Error saving image");
