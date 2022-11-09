@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import controller.commands.BrightnessCmd;
+import controller.commands.GreyscaleCmd;
 import controller.commands.HorizontalFlipCmd;
 import controller.commands.VerticalFlipCmd;
 import controller.commands.VisualizeCmd;
@@ -454,6 +455,37 @@ public class ImageControllerTest {
         newPixels[2][0] = new Color(115, 115, 115);
         newPixels[2][1] = new Color(109, 109, 109);
         newPixels[2][2] = new Color(103, 103, 103);
+
+      }
+    }
+    assertArrayEquals(newPixels, store.retrieve(newFileName).getPixels());
+  }
+
+  @Test
+  public void testGreyscale() {
+    Appendable appendable = new StringBuilder();
+    ImageProcessorView view = new ImageProcessorViewImpl(appendable);
+    StoredImages store = new StoredImagesImpl();
+    String fileName = "ExampleImage.ppm";
+    String newFileName = "GreyscaledExampleImage.ppm";
+    store.add(fileName, this.beforeImage, true);
+    ImageProcessorCmd greyscale = new GreyscaleCmd(view, store, fileName, newFileName);
+    greyscale.execute();
+
+    Color[][] newPixels = new Color[3][3];
+    for (int i = 0; i < newPixels.length; i++) {
+      for (int j = 0; j < newPixels[0].length; j++) {
+        newPixels[0][0] = new Color(53, 53, 53);
+        newPixels[0][1] = new Color(51, 51, 51);
+        newPixels[0][2] = new Color(50, 50, 50);
+
+        newPixels[1][0] = new Color(51, 51, 51);
+        newPixels[1][1] = new Color(48, 48, 48);
+        newPixels[1][2] = new Color(45, 45, 45);
+
+        newPixels[2][0] = new Color(50, 50, 50);
+        newPixels[2][1] = new Color(45, 45, 45);
+        newPixels[2][2] = new Color(40, 40, 40);
 
       }
     }
