@@ -1,7 +1,7 @@
 import controller.ImagePPMHandler;
 import model.Image;
 import model.ImageTransformation;
-import model.transformations.Sharpen;
+import model.transformations.Blur;
 
 /**
  * A temporary main class used for testing new image transformations. Will be deleted before
@@ -18,12 +18,12 @@ public class TestMain {
   public static void main(String[] args) {
 
     ImagePPMHandler handler = new ImagePPMHandler();
-    ImageTransformation transformation = new Sharpen();
+    ImageTransformation transformation = new Blur();
     Image image;
     Image transformed;
 
     try {
-      image = handler.process("res/Manhattan.ppm");
+      image = handler.process("res/ManhattanBlur.ppm");
       System.out.println("Image loaded successfully");
     } catch (Exception e) {
       System.out.println("Error loading image");
@@ -39,7 +39,7 @@ public class TestMain {
     }
 
     try {
-      handler.export(transformed, "res/ManhattanSharpen.ppm");
+      handler.export(transformed, "res/ManhattanBlur2.ppm");
       System.out.println("Image exported successfully");
     } catch (Exception e) {
       System.out.println("Error saving image");

@@ -9,11 +9,10 @@ import model.ImageTransformation;
  * An implementation of the {@link ImageTransformation} interface representing a macro used to blur
  * an image.
  */
-// TODO: Abstract blur and sharpen into a single class
 public class Blur implements ImageTransformation {
 
-  private static final double[][] BLUR_KERNEL = {{1.0 / 16.0, 1.0 / 8.0, 1.0 / 16.0},
-      {1.0 / 8.0, 1.0 / 4.0, 1.0 / 8.0}, {1.0 / 16.0, 1.0 / 8.0, 1.0 / 16.0}};
+  private static final double[][] BLUR_KERNEL = {{0.0625, 0.125, 0.0625}, {0.125, 0.25, 0.125},
+      {0.0625, 0.125, 0.0625}};
 
   @Override
   public Image transform(Image image) {
@@ -68,9 +67,9 @@ public class Blur implements ImageTransformation {
     }
 
     // Rounds the RGB values to the nearest integer
-    int red = Math.toIntExact(Math.round(redVal));
-    int green = Math.toIntExact(Math.round(greenVal));
-    int blue = Math.toIntExact(Math.round(blueVal));
+    int red = (int) Math.round(redVal);
+    int green = (int) Math.round(greenVal);
+    int blue = (int) Math.round(blueVal);
 
     // Clamps the RGB values to be between 0 and 255
     red = Math.max(0, Math.min(red, 255));

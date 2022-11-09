@@ -1,7 +1,6 @@
 package controller.commands;
 
 import controller.ImageFileHandler;
-import controller.ImageIOHandler;
 import controller.ImagePPMHandler;
 import controller.ImageProcessorCmd;
 import model.Image;
@@ -42,19 +41,18 @@ public class LoadCmd implements ImageProcessorCmd {
     this.fileName = fileName.toLowerCase();
   }
 
-  // TODO: Document support for new file types change
+
   @Override
   public void execute() throws IllegalArgumentException {
-    ImageFileHandler handler;
-    if (this.path.toLowerCase().endsWith(".ppm")) {
-      handler = new ImagePPMHandler();
+    if (this.path.endsWith(".ppm")) {
+      ImageFileHandler handler = new ImagePPMHandler();
+      Image processed = handler.process(this.path);
+      this.store.add(this.fileName, processed, true);
+      this.view.renderMessage(
+          "\"" + this.path + "\" loaded successfully as \"" + this.fileName + "\""
+              + System.lineSeparator() + "Command: ");
     } else {
-      handler = new ImageIOHandler();
+      throw new IllegalArgumentException("File type not supported");
     }
-
-    Image processed = handler.process(this.path);
-    this.store.add(this.fileName, processed, true);
-    this.view.renderMessage("\"" + this.path + "\" loaded successfully as \"" + this.fileName + "\""
-        + System.lineSeparator() + "Command: ");
   }
 }
