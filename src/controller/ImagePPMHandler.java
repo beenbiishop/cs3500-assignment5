@@ -36,6 +36,7 @@ public class ImagePPMHandler implements ImageFileHandler {
       }
     }
 
+    scan.close();
     scan = new Scanner(sb.toString());
 
     String token;
