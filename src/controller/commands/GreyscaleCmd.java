@@ -4,7 +4,7 @@ import controller.ImageProcessorCmd;
 import model.Image;
 import model.ImageTransformation;
 import model.StoredImages;
-import model.transformations.Greyscale;
+import model.transformations.ColorTransformation;
 import view.ImageProcessorView;
 
 /**
@@ -40,7 +40,8 @@ public class GreyscaleCmd implements ImageProcessorCmd {
   @Override
   public void execute() {
     Image retrieved = this.store.retrieve(this.fileName);
-    ImageTransformation greyscale = new Greyscale();
+    ImageTransformation greyscale =
+            new ColorTransformation(ColorTransformation.ColorTransformations.Greyscale);
     Image processed = greyscale.transform(retrieved);
     this.store.add(this.newFileName, processed, true);
     this.view.renderMessage(

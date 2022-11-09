@@ -4,8 +4,7 @@ import controller.ImageProcessorCmd;
 import model.Image;
 import model.ImageTransformation;
 import model.StoredImages;
-import model.transformations.Greyscale;
-import model.transformations.Sepia;
+import model.transformations.ColorTransformation;
 import view.ImageProcessorView;
 
 
@@ -42,7 +41,8 @@ public class SepiaCmd implements ImageProcessorCmd {
   @Override
   public void execute() {
     Image retrieved = this.store.retrieve(this.fileName);
-    ImageTransformation sepia = new Sepia();
+    ImageTransformation sepia =
+            new ColorTransformation(ColorTransformation.ColorTransformations.Sepia);
     Image processed = sepia.transform(retrieved);
     this.store.add(this.newFileName, processed, true);
     this.view.renderMessage(
