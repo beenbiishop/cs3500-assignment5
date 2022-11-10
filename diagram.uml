@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/Users/benbishop/Documents/CS3500/assignments/Assignment5/src</OriginalElement>
+  <nodes>
+    <node x="937.7545479603089" y="383.59040793825795">model.transformations.Greyscale</node>
+    <node x="-114.83682469680264" y="464.3208379272327">model.ImageImpl</node>
+    <node x="993.7545479603089" y="487.7712238147739">model.transformations.Visualize</node>
+    <node x="390.0981256890851" y="736.3894707828005">controller.ImageProcessorControllerImpl</node>
+    <node x="944.533076074973" y="814.4423925027563">controller.commands.BrightnessCmd</node>
+    <node x="168.16317530319736" y="295.3208379272327">model.StoredImages</node>
+    <node x="415.5981256890851" y="845.789691289967">ImageProcessorRunner</node>
+    <node x="1023.033076074973" y="736.3894707828005">controller.commands.VisualizeCmd</node>
+    <node x="1508.0793825799342" y="589.3894707828005">view.ImageProcessorView</node>
+    <node x="-82.83682469680264" y="295.3208379272327">model.Image</node>
+    <node x="168.16317530319736" y="464.3208379272327">model.StoredImagesImpl</node>
+    <node x="866.033076074973" y="736.3894707828005">controller.commands.SaveCmd</node>
+    <node x="114.16317530319736" y="771.2337375964718">controller.ImageIOHandler</node>
+    <node x="777.7545479603089" y="476.7712238147739">model.transformations.Sepia</node>
+    <node x="958.783076074973" y="633.3894707828005">controller.ImageProcessorCmd</node>
+    <node x="1173.7545479603089" y="394.59040793825795">model.transformations.HorizontalFlip</node>
+    <node x="1130.533076074973" y="814.4423925027563">controller.commands.FilterCmd</node>
+    <node x="405.5981256890851" y="633.3894707828005">controller.ImageProcessorController</node>
+    <node x="669.7545479603089" y="383.59040793825795">model.transformations.Blur</node>
+    <node x="1499.079382579934" y="736.3894707828005">view.ImageProcessorViewImpl</node>
+    <node x="1195.033076074973" y="736.3894707828005">controller.commands.HorizontalFlipCmd</node>
+    <node x="709.033076074973" y="736.3894707828005">controller.commands.MenuCmd</node>
+    <node x="5.413175303197363" y="646.2337375964718">controller.ImageFileHandler</node>
+    <node x="453.7545479603089" y="394.59040793825795">model.transformations.VerticalFlip</node>
+    <node x="1287.533076074973" y="814.4423925027563">controller.commands.VerticalFlipCmd</node>
+    <node x="-114.83682469680264" y="793.2337375964718">controller.ImagePPMHandler</node>
+    <node x="1209.7545479603089" y="476.7712238147739">model.transformations.Sharpen</node>
+    <node x="787.533076074973" y="814.4423925027563">controller.commands.LoadCmd</node>
+    <node x="561.7545479603089" y="487.7712238147739">model.transformations.Brightness</node>
+    <node x="833.5" y="289.49999999999994">model.ImageTransformation</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="controller.commands.SaveCmd" target="controller.ImageProcessorCmd" relationship="REALIZATION">
+      <point x="0.0" y="-26.5" />
+      <point x="934.533076074973" y="711.3894707828005" />
+      <point x="1061.783076074973" y="711.3894707828005" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="model.transformations.Brightness" target="model.ImageTransformation" relationship="REALIZATION">
+      <point x="0.0" y="-26.5" />
+      <point x="659.7545479603089" y="367.49999999999994" />
+      <point x="936.0" y="367.49999999999994" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="model.transformations.VerticalFlip" target="model.ImageTransformation" relationship="REALIZATION">
+      <point x="0.0" y="-26.5" />
+      <point x="551.7545479603089" y="367.49999999999994" />
+      <point x="936.0" y="367.49999999999994" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="model.transformations.Greyscale" target="model.ImageTransformation" relationship="REALIZATION">
+      <point x="0.0" y="-37.5" />
+      <point x="1045.7545479603089" y="367.49999999999994" />
+      <point x="936.0" y="367.49999999999994" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="controller.commands.LoadCmd" target="controller.ImageProcessorCmd" relationship="REALIZATION">
+      <point x="0.0" y="-26.5" />
+      <point x="856.033076074973" y="711.3894707828005" />
+      <point x="1061.783076074973" y="711.3894707828005" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="controller.ImagePPMHandler" target="controller.ImageFileHandler" relationship="REALIZATION">
+      <point x="0.0" y="-37.5" />
+      <point x="-10.336824696802637" y="746.2337375964718" />
+      <point x="109.91317530319736" y="746.2337375964718" />
+      <point x="0.0" y="37.5" />
+    </edge>
+    <edge source="controller.commands.VisualizeCmd" target="controller.ImageProcessorCmd" relationship="REALIZATION">
+      <point x="0.0" y="-26.5" />
+      <point x="1099.033076074973" y="711.3894707828005" />
+      <point x="1061.783076074973" y="711.3894707828005" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="model.ImageImpl" target="model.Image" relationship="REALIZATION">
+      <point x="0.0" y="-70.5" />
+      <point x="0.0" y="59.5" />
+    </edge>
+    <edge source="model.transformations.Sharpen" target="model.ImageTransformation" relationship="REALIZATION">
+      <point x="0.0" y="-37.5" />
+      <point x="1346.2545479603089" y="367.49999999999994" />
+      <point x="936.0" y="367.49999999999994" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="model.transformations.HorizontalFlip" target="model.ImageTransformation" relationship="REALIZATION">
+      <point x="0.0" y="-26.5" />
+      <point x="1271.7545479603089" y="367.49999999999994" />
+      <point x="936.0" y="367.49999999999994" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="model.transformations.Visualize" target="model.ImageTransformation" relationship="REALIZATION">
+      <point x="0.0" y="-26.5" />
+      <point x="1091.7545479603089" y="367.49999999999994" />
+      <point x="936.0" y="367.49999999999994" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="controller.commands.VerticalFlipCmd" target="controller.ImageProcessorCmd" relationship="REALIZATION">
+      <point x="0.0" y="-26.5" />
+      <point x="1371.533076074973" y="801.9159316427784" />
+      <point x="1397.5507166482917" y="801.9159316427784" />
+      <point x="1397.5507166482917" y="711.3894707828005" />
+      <point x="1061.783076074973" y="711.3894707828005" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="controller.commands.HorizontalFlipCmd" target="controller.ImageProcessorCmd" relationship="REALIZATION">
+      <point x="0.0" y="-26.5" />
+      <point x="1289.033076074973" y="711.3894707828005" />
+      <point x="1061.783076074973" y="711.3894707828005" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="controller.ImageIOHandler" target="controller.ImageFileHandler" relationship="REALIZATION">
+      <point x="0.0" y="-59.5" />
+      <point x="230.16317530319736" y="746.2337375964718" />
+      <point x="109.91317530319736" y="746.2337375964718" />
+      <point x="0.0" y="37.5" />
+    </edge>
+    <edge source="view.ImageProcessorViewImpl" target="view.ImageProcessorView" relationship="REALIZATION">
+      <point x="2.2737367544323206E-13" y="-48.5" />
+      <point x="0.0" y="48.5" />
+    </edge>
+    <edge source="controller.commands.BrightnessCmd" target="controller.ImageProcessorCmd" relationship="REALIZATION">
+      <point x="0.0" y="-26.5" />
+      <point x="1013.033076074973" y="814.4423925027563" />
+      <point x="1013.033076074973" y="711.3894707828005" />
+      <point x="1061.783076074973" y="711.3894707828005" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="model.transformations.Blur" target="model.ImageTransformation" relationship="REALIZATION">
+      <point x="0.0" y="-37.5" />
+      <point x="793.7545479603089" y="367.49999999999994" />
+      <point x="936.0" y="367.49999999999994" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="controller.ImageProcessorControllerImpl" target="controller.ImageProcessorController" relationship="REALIZATION">
+      <point x="0.0" y="-37.5" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="model.transformations.Sepia" target="model.ImageTransformation" relationship="REALIZATION">
+      <point x="0.0" y="-37.5" />
+      <point x="875.7545479603089" y="367.49999999999994" />
+      <point x="936.0" y="367.49999999999994" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="model.StoredImagesImpl" target="model.StoredImages" relationship="REALIZATION">
+      <point x="0.0" y="-59.5" />
+      <point x="0.0" y="59.5" />
+    </edge>
+    <edge source="controller.commands.MenuCmd" target="controller.ImageProcessorCmd" relationship="REALIZATION">
+      <point x="0.0" y="-26.5" />
+      <point x="777.533076074973" y="711.3894707828005" />
+      <point x="1061.783076074973" y="711.3894707828005" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="controller.commands.FilterCmd" target="controller.ImageProcessorCmd" relationship="REALIZATION">
+      <point x="0.0" y="-26.5" />
+      <point x="1199.033076074973" y="801.9159316427784" />
+      <point x="1185.033076074973" y="801.9159316427784" />
+      <point x="1185.033076074973" y="711.3894707828005" />
+      <point x="1061.783076074973" y="711.3894707828005" />
+      <point x="0.0" y="26.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0377574370709381" showDependencies="false" x="801.5" y="557.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
