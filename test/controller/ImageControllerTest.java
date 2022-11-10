@@ -351,17 +351,17 @@ public class ImageControllerTest {
   @Test
   public void testSavePNG() {
     String filePath = "res/ExampleImage2.png"; // relative to the project root
+    String filePath2 = "res/exImage2.png"; // relative to the project root
 
     ImageProcessorCmd command1 = new LoadCmd(this.view, this.store, filePath,
-            "ExampleImage2");
+            "exImage2");
     command1.execute();
-    ImageProcessorCmd command2 = new SaveCmd(this.view, this.store, filePath,
-            "ExampleImage2");
+    ImageProcessorCmd command2 = new SaveCmd(this.view, this.store, filePath2,
+            "exImage2");
     command2.execute();
 
-    assertTrue(this.appendable.toString().contains("\"" + "exampleimage2"
-            + "\" saved successfully as \"" + filePath + "\""
-            + System.lineSeparator()));
+    assertTrue(this.appendable.toString().contains("\" saved successfully as \""
+            + filePath2 + "\""));
   }
 
   @Test
@@ -370,10 +370,10 @@ public class ImageControllerTest {
     String filePath2 = "res/ExampleImage2.ppm"; // relative to the project root
 
     ImageProcessorCmd command1 = new LoadCmd(this.view, this.store, filePath1,
-            "ExampleImage2");
+            "exImage2");
     command1.execute();
     ImageProcessorCmd command2 = new SaveCmd(this.view, this.store, filePath2,
-            "ExampleImage2");
+            "exImage2");
     command2.execute();
 
     assertTrue(this.appendable.toString().contains("ExampleImage2.ppm"));
@@ -387,16 +387,16 @@ public class ImageControllerTest {
     String filePath = "res/ExampleImage2.png"; // relative to the project root
 
     ImageProcessorCmd command1 = new LoadCmd(this.view, this.store, filePath,
-            "ExampleImage2");
+            "exImage2");
     command1.execute();
     ImageProcessorCmd command2 = new SaveCmd(this.view, this.store, filePath,
-            "ExampleImage2");
+            "exImage2");
     command2.execute();
 
 
     ImageFileHandler ioHandler = new ImageIOHandler();
 
-    Image retrievedImage = this.store.retrieve("ExampleImage2");
+    Image retrievedImage = this.store.retrieve("exImage2");
 
     assertArrayEquals(retrievedImage.getPixels(), ioHandler.process(filePath).getPixels());
   }
