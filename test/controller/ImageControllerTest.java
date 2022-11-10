@@ -9,6 +9,8 @@ import controller.commands.BrightnessCmd;
 import controller.commands.FilterCmd;
 import controller.commands.FilterCmd.FilterType;
 import controller.commands.HorizontalFlipCmd;
+import controller.commands.LoadCmd;
+import controller.commands.SaveCmd;
 import controller.commands.VerticalFlipCmd;
 import controller.commands.VisualizeCmd;
 import java.awt.Color;
@@ -331,6 +333,53 @@ public class ImageControllerTest {
     Image commandImage = this.store.retrieve("example-sepia");
 
     assertArrayEquals(macroImage.getPixels(), commandImage.getPixels());
+  }
+
+  @Test
+  public void testLoadPNG() {
+    String filePath = "res/ExampleImage2.png"; // relative to the project root
+
+    ImageProcessorCmd command = new LoadCmd(this.view, this.store, filePath,
+            "ExampleImage2");
+    command.execute();
+    Image commandImage = this.store.retrieve("ExampleImage2");
+
+    ImageFileHandler pngHandler = new ImageIOHandler();
+    assertArrayEquals(pngHandler.process(filePath).getPixels(), commandImage.getPixels());
+  }
+
+  @Test
+  public void testSavePNG() {
+    String filePath = "res/ExampleImage2.png"; // relative to the project root
+    ImageFileHandler pngHandler = new ImageIOHandler();
+
+    ImageProcessorCmd command1 = new LoadCmd(this.view, this.store, filePath,
+            "ExampleImage2");
+    command1.execute();
+    ImageProcessorCmd command2 = new SaveCmd(this.view, this.store, filePath,
+            "ExampleImage2");
+    command2.execute();
+
+    assertTrue(this.appendable.toString().contains("\"" + "exampleimage2"
+            + "\" saved successfully as \"" + filePath + "\""
+            + System.lineSeparator()));
+  }
+
+  @Test
+  public void testSaveDiffFile() {
+    String filePath1 = "res/ExampleImage2.png"; // relative to the project root
+    String filePath2 = "res/ExampleImage2.ppm"; // relative to the project root
+    ImageFileHandler pngHandler = new ImageIOHandler();
+
+    ImageProcessorCmd command1 = new LoadCmd(this.view, this.store, filePath1,
+            "ExampleImage2");
+    command1.execute();
+    ImageProcessorCmd command2 = new SaveCmd(this.view, this.store, filePath2,
+            "ExampleImage2");
+    command2.execute();
+
+    assertTrue(this.appendable.toString().contains("ExampleImage2.ppm"));
+
   }
 
 }
