@@ -13,10 +13,16 @@ import controller.commands.LoadCmd;
 import controller.commands.SaveCmd;
 import controller.commands.VerticalFlipCmd;
 import controller.commands.VisualizeCmd;
+
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import model.Image;
 import model.ImageImpl;
 import model.ImageTransformation;
@@ -31,8 +37,10 @@ import model.transformations.Sharpen;
 import model.transformations.VerticalFlip;
 import model.transformations.Visualize;
 import model.transformations.Visualize.Channel;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import view.ImageProcessorView;
 import view.ImageProcessorViewImpl;
 
@@ -66,7 +74,7 @@ public class ImageControllerTest {
     this.beforeImage = new ImageImpl(pixels);
 
     String userCommandEx1 = "load res/ExampleImage.ppm ExampleImage" + System.lineSeparator()
-        + "brighten 10 ExampleImage BrightenedImage";
+            + "brighten 10 ExampleImage BrightenedImage";
     InputStream targetStreamEx1 = new ByteArrayInputStream(userCommandEx1.getBytes());
     this.in = new InputStreamReader(targetStreamEx1);
     this.appendable = new StringBuilder();
@@ -109,9 +117,9 @@ public class ImageControllerTest {
 
     this.controller1.run();
     assertEquals("The parsed string for a new file's name: exampleimage" + System.lineSeparator()
-        + "The parsed string for the name of the file to modify: exampleimage"
-        + System.lineSeparator() + "The parsed string for a new file's name: brightenedimage"
-        + System.lineSeparator(), log.toString());
+            + "The parsed string for the name of the file to modify: exampleimage"
+            + System.lineSeparator() + "The parsed string for a new file's name: brightenedimage"
+            + System.lineSeparator(), log.toString());
   }
 
   @Test
@@ -172,7 +180,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new BrightnessCmd(this.view, this.store, 10, "example",
-        "example-bright");
+            "example-bright");
     command.execute();
     Image commandImage = this.store.retrieve("example-bright");
 
@@ -185,7 +193,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new HorizontalFlipCmd(this.view, this.store, "example",
-        "example-horizontal");
+            "example-horizontal");
     command.execute();
     Image commandImage = this.store.retrieve("example-horizontal");
 
@@ -198,7 +206,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new VerticalFlipCmd(this.view, this.store, "example",
-        "example-vertical");
+            "example-vertical");
     command.execute();
     Image commandImage = this.store.retrieve("example-vertical");
 
@@ -211,7 +219,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Red, "example",
-        "example-red");
+            "example-red");
     command.execute();
     Image commandImage = this.store.retrieve("example-red");
 
@@ -224,7 +232,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Green, "example",
-        "example-green");
+            "example-green");
     command.execute();
     Image commandImage = this.store.retrieve("example-green");
 
@@ -237,7 +245,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Blue, "example",
-        "example-blue");
+            "example-blue");
     command.execute();
     Image commandImage = this.store.retrieve("example-blue");
 
@@ -250,7 +258,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Luma, "example",
-        "example-luma");
+            "example-luma");
     command.execute();
     Image commandImage = this.store.retrieve("example-luma");
 
@@ -263,7 +271,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Value, "example",
-        "example-value");
+            "example-value");
     command.execute();
     Image commandImage = this.store.retrieve("example-value");
 
@@ -276,7 +284,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Intensity,
-        "example", "example-intensity");
+            "example", "example-intensity");
     command.execute();
     Image commandImage = this.store.retrieve("example-intensity");
 
@@ -289,7 +297,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new FilterCmd(this.view, this.store, FilterType.Blur, "example",
-        "example-blur");
+            "example-blur");
     command.execute();
     Image commandImage = this.store.retrieve("example-blur");
 
@@ -302,7 +310,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new FilterCmd(this.view, this.store, FilterType.Sharpen, "example",
-        "example-sharp");
+            "example-sharp");
     command.execute();
     Image commandImage = this.store.retrieve("example-sharp");
 
@@ -315,7 +323,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new FilterCmd(this.view, this.store, FilterType.Greyscale,
-        "example", "example-greyscale");
+            "example", "example-greyscale");
     command.execute();
     Image commandImage = this.store.retrieve("example-greyscale");
 
@@ -328,7 +336,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new FilterCmd(this.view, this.store, FilterType.Sepia, "example",
-        "example-sepia");
+            "example-sepia");
     command.execute();
     Image commandImage = this.store.retrieve("example-sepia");
 
@@ -417,6 +425,38 @@ public class ImageControllerTest {
 
     //Checks if the ppmHandler saved the image correctly under the new filePath.
     assertArrayEquals(processedImage.getPixels(), exportedImage.getPixels());
+  }
+
+  @Test
+  public void testScriptFile() {
+    try {
+      String filePath = "res/test-script.txt";
+      this.appendable = new StringBuilder();
+      this.view = new ImageProcessorViewImpl(appendable);
+      InputStream targetStreamEx1 = new FileInputStream(filePath);
+      this.in = new InputStreamReader(targetStreamEx1);
+      StringBuilder log = new StringBuilder();
+      StoredImages mockStore = new MockStoredImages(log);
+      this.controller1 = new ImageProcessorControllerImpl(this.in, this.view, mockStore);
+      this.controller1.run();
+      assertEquals("The parsed string for the name of the file to modify: example2"
+                      + System.lineSeparator()
+                      + "The parsed string for the name of the file to modify: example2"
+                      + System.lineSeparator()
+                      + "The parsed string for the name of the file to modify: example2-blur"
+                      + System.lineSeparator()
+                      + "The parsed string for the name of the file to modify: example2-sepia"
+                      + System.lineSeparator()
+              ,log.toString());
+
+    } catch (FileNotFoundException ex) {
+      try {
+        this.appendable.append(ex.getMessage());
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    }
+
   }
 
 
