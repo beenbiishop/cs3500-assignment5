@@ -41,7 +41,6 @@ public class ImageProcessorViewImpl implements ImageProcessorView {
         + "Command: ");
   }
 
-  // TODO: note changes to menu to include new commands
   @Override
   public void renderMenu() throws IllegalStateException {
     this.renderMessage("Supported commands:" + System.lineSeparator());

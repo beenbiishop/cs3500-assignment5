@@ -42,7 +42,6 @@ public class LoadCmd implements ImageProcessorCmd {
     this.fileName = fileName.toLowerCase();
   }
 
-  // TODO: Document support for new file types change
   @Override
   public void execute() throws IllegalArgumentException {
     ImageFileHandler handler;

@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import controller.commands.BrightnessCmd;
+import controller.commands.FilterCmd;
+import controller.commands.FilterCmd.FilterType;
 import controller.commands.HorizontalFlipCmd;
 import controller.commands.VerticalFlipCmd;
 import controller.commands.VisualizeCmd;
@@ -15,8 +17,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import model.Image;
 import model.ImageImpl;
+import model.ImageTransformation;
 import model.StoredImages;
 import model.StoredImagesImpl;
+import model.transformations.Blur;
+import model.transformations.Brightness;
+import model.transformations.Greyscale;
+import model.transformations.HorizontalFlip;
+import model.transformations.Sepia;
+import model.transformations.Sharpen;
+import model.transformations.VerticalFlip;
+import model.transformations.Visualize;
 import model.transformations.Visualize.Channel;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,20 +51,15 @@ public class ImageControllerTest {
   @Before
   public void setUp() {
     Color[][] pixels = new Color[3][3];
-    for (int i = 0; i < pixels.length; i++) {
-      for (int j = 0; j < pixels[0].length; j++) {
-        pixels[0][0] = new Color(128, 16, 216);
-        pixels[0][1] = new Color(114, 17, 219);
-        pixels[0][2] = new Color(105, 18, 222);
-        pixels[1][0] = new Color(114, 17, 219);
-        pixels[1][1] = new Color(97, 18, 224);
-        pixels[1][2] = new Color(84, 18, 227);
-        pixels[2][0] = new Color(105, 18, 222);
-        pixels[2][1] = new Color(84, 18, 227);
-        pixels[2][2] = new Color(61, 18, 231);
-
-      }
-    }
+    pixels[0][0] = new Color(128, 16, 216);
+    pixels[0][1] = new Color(114, 17, 219);
+    pixels[0][2] = new Color(105, 18, 222);
+    pixels[1][0] = new Color(114, 17, 219);
+    pixels[1][1] = new Color(97, 18, 224);
+    pixels[1][2] = new Color(84, 18, 227);
+    pixels[2][0] = new Color(105, 18, 222);
+    pixels[2][1] = new Color(84, 18, 227);
+    pixels[2][2] = new Color(61, 18, 231);
 
     this.beforeImage = new ImageImpl(pixels);
 
@@ -61,10 +67,10 @@ public class ImageControllerTest {
         + "brighten 10 ExampleImage BrightenedImage";
     InputStream targetStreamEx1 = new ByteArrayInputStream(userCommandEx1.getBytes());
     this.in = new InputStreamReader(targetStreamEx1);
-
     this.appendable = new StringBuilder();
     this.view = new ImageProcessorViewImpl(appendable);
     this.store = new StoredImagesImpl();
+    this.store.add("example", this.beforeImage, true);
 
   }
 
@@ -135,28 +141,10 @@ public class ImageControllerTest {
 
   @Test
   public void testPPMHandlerProcess() {
-    String filePath = "res/ExampleImage.ppm";
-    //this is what my file path is, I made 3 x 3 image for testing purposes
-
-    Color[][] pixels = new Color[3][3];
-    for (int i = 0; i < pixels.length; i++) {
-      for (int j = 0; j < pixels[0].length; j++) {
-        pixels[0][0] = new Color(128, 16, 216);
-        pixels[0][1] = new Color(114, 17, 219);
-        pixels[0][2] = new Color(105, 18, 222);
-        pixels[1][0] = new Color(114, 17, 219);
-        pixels[1][1] = new Color(97, 18, 224);
-        pixels[1][2] = new Color(84, 18, 227);
-        pixels[2][0] = new Color(105, 18, 222);
-        pixels[2][1] = new Color(84, 18, 227);
-        pixels[2][2] = new Color(61, 18, 231);
-
-      }
-    }
-
+    String filePath = "res/ExampleImage.ppm"; // relative to the project root
     ImageFileHandler ppmHandler = new ImagePPMHandler();
 
-    assertArrayEquals(pixels, ppmHandler.process(filePath).getPixels());
+    assertArrayEquals(this.beforeImage.getPixels(), ppmHandler.process(filePath).getPixels());
   }
 
   @Test
@@ -178,286 +166,171 @@ public class ImageControllerTest {
 
   @Test
   public void testBrightnessCmd() {
-    Appendable appendable = new StringBuilder();
-    ImageProcessorView view = new ImageProcessorViewImpl(appendable);
-    StoredImages store = new StoredImagesImpl();
-    String fileName = "ExampleImage.ppm";
-    String newFileName = "BrightenedImage.ppm";
-    store.add(fileName, this.beforeImage, true);
+    ImageTransformation macro = new Brightness(10);
+    Image macroImage = macro.transform(this.beforeImage);
 
-    ImageProcessorCmd brightened = new BrightnessCmd(view, store, 10, fileName, newFileName);
-    brightened.execute();
+    ImageProcessorCmd command = new BrightnessCmd(this.view, this.store, 10, "example",
+        "example-bright");
+    command.execute();
+    Image commandImage = this.store.retrieve("example-bright");
 
-    Color[][] newPixels = new Color[3][3];
-    for (int i = 0; i < newPixels.length; i++) {
-      for (int j = 0; j < newPixels[0].length; j++) {
-        newPixels[0][0] = new Color(138, 26, 226);
-        newPixels[0][1] = new Color(124, 27, 229);
-        newPixels[0][2] = new Color(115, 28, 232);
-        newPixels[1][0] = new Color(124, 27, 229);
-        newPixels[1][1] = new Color(107, 28, 234);
-        newPixels[1][2] = new Color(94, 28, 237);
-        newPixels[2][0] = new Color(115, 28, 232);
-        newPixels[2][1] = new Color(94, 28, 237);
-        newPixels[2][2] = new Color(71, 28, 241);
-
-      }
-    }
-
-    assertArrayEquals(newPixels, store.retrieve(newFileName).getPixels());
+    assertArrayEquals(macroImage.getPixels(), commandImage.getPixels());
   }
 
   @Test
   public void testHorizontalFlip() {
-    Appendable appendable = new StringBuilder();
-    ImageProcessorView view = new ImageProcessorViewImpl(appendable);
-    StoredImages store = new StoredImagesImpl();
-    String fileName = "ExampleImage.ppm";
-    String newFileName = "HorizontalFlippedImage.ppm";
-    store.add(fileName, this.beforeImage, true);
-    ImageProcessorCmd horFlip = new HorizontalFlipCmd(view, store, fileName, newFileName);
-    horFlip.execute();
+    ImageTransformation macro = new HorizontalFlip();
+    Image macroImage = macro.transform(this.beforeImage);
 
-    Color[][] newPixels = new Color[3][3];
-    for (int i = 0; i < newPixels.length; i++) {
-      for (int j = 0; j < newPixels[0].length; j++) {
-        newPixels[0][0] = new Color(105, 18, 222);
-        newPixels[0][1] = new Color(114, 17, 219);
-        newPixels[0][2] = new Color(128, 16, 216);
+    ImageProcessorCmd command = new HorizontalFlipCmd(this.view, this.store, "example",
+        "example-horizontal");
+    command.execute();
+    Image commandImage = this.store.retrieve("example-horizontal");
 
-        newPixels[1][0] = new Color(84, 18, 227);
-        newPixels[1][1] = new Color(97, 18, 224);
-        newPixels[1][2] = new Color(114, 17, 219);
-
-        newPixels[2][0] = new Color(61, 18, 231);
-        newPixels[2][1] = new Color(84, 18, 227);
-        newPixels[2][2] = new Color(105, 18, 222);
-
-      }
-    }
-
-    assertArrayEquals(newPixels, store.retrieve(newFileName).getPixels());
+    assertArrayEquals(macroImage.getPixels(), commandImage.getPixels());
   }
 
   @Test
   public void testVerticalFlip() {
-    Appendable appendable = new StringBuilder();
-    ImageProcessorView view = new ImageProcessorViewImpl(appendable);
-    StoredImages store = new StoredImagesImpl();
-    String fileName = "ExampleImage.ppm";
-    String newFileName = "VerticallyFlippedImage.ppm";
-    store.add(fileName, this.beforeImage, true);
-    ImageProcessorCmd verFlip = new VerticalFlipCmd(view, store, fileName, newFileName);
-    verFlip.execute();
+    ImageTransformation macro = new VerticalFlip();
+    Image macroImage = macro.transform(this.beforeImage);
 
-    Color[][] newPixels = new Color[3][3];
-    for (int i = 0; i < newPixels.length; i++) {
-      for (int j = 0; j < newPixels[0].length; j++) {
-        newPixels[0][0] = new Color(105, 18, 222);
-        newPixels[0][1] = new Color(84, 18, 227);
-        newPixels[0][2] = new Color(61, 18, 231);
+    ImageProcessorCmd command = new VerticalFlipCmd(this.view, this.store, "example",
+        "example-vertical");
+    command.execute();
+    Image commandImage = this.store.retrieve("example-vertical");
 
-        newPixels[1][0] = new Color(114, 17, 219);
-        newPixels[1][1] = new Color(97, 18, 224);
-        newPixels[1][2] = new Color(84, 18, 227);
-
-        newPixels[2][0] = new Color(128, 16, 216);
-        newPixels[2][1] = new Color(114, 17, 219);
-        newPixels[2][2] = new Color(105, 18, 222);
-
-      }
-    }
-
-    assertArrayEquals(newPixels, store.retrieve(newFileName).getPixels());
+    assertArrayEquals(macroImage.getPixels(), commandImage.getPixels());
   }
 
   @Test
   public void testVisualizeRed() {
-    Appendable appendable = new StringBuilder();
-    ImageProcessorView view = new ImageProcessorViewImpl(appendable);
-    StoredImages store = new StoredImagesImpl();
-    String fileName = "ExampleImage.ppm";
-    String newFileName = "RedVisualizedImage.ppm";
-    store.add(fileName, this.beforeImage, true);
-    ImageProcessorCmd visualizeRed = new VisualizeCmd(view, store, Channel.Red, fileName,
-        newFileName);
-    visualizeRed.execute();
+    ImageTransformation macro = new Visualize(Channel.Red);
+    Image macroImage = macro.transform(this.beforeImage);
 
-    Color[][] newPixels = new Color[3][3];
-    for (int i = 0; i < newPixels.length; i++) {
-      for (int j = 0; j < newPixels[0].length; j++) {
-        newPixels[0][0] = new Color(128, 128, 128);
-        newPixels[0][1] = new Color(114, 114, 114);
-        newPixels[0][2] = new Color(105, 105, 105);
+    ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Red, "example",
+        "example-red");
+    command.execute();
+    Image commandImage = this.store.retrieve("example-red");
 
-        newPixels[1][0] = new Color(114, 114, 114);
-        newPixels[1][1] = new Color(97, 97, 97);
-        newPixels[1][2] = new Color(84, 84, 84);
-
-        newPixels[2][0] = new Color(105, 105, 105);
-        newPixels[2][1] = new Color(84, 84, 84);
-        newPixels[2][2] = new Color(61, 61, 61);
-
-
-      }
-    }
-    assertArrayEquals(newPixels, store.retrieve(newFileName).getPixels());
+    assertArrayEquals(macroImage.getPixels(), commandImage.getPixels());
   }
 
   @Test
   public void testVisualizeGreen() {
-    Appendable appendable = new StringBuilder();
-    ImageProcessorView view = new ImageProcessorViewImpl(appendable);
-    StoredImages store = new StoredImagesImpl();
-    String fileName = "ExampleImage.ppm";
-    String newFileName = "GreenVisualizedImage.ppm";
-    store.add(fileName, this.beforeImage, true);
-    ImageProcessorCmd visualizeGreen = new VisualizeCmd(view, store, Channel.Green, fileName,
-        newFileName);
-    visualizeGreen.execute();
+    ImageTransformation macro = new Visualize(Channel.Green);
+    Image macroImage = macro.transform(this.beforeImage);
 
-    Color[][] newPixels = new Color[3][3];
-    for (int i = 0; i < newPixels.length; i++) {
-      for (int j = 0; j < newPixels[0].length; j++) {
-        newPixels[0][0] = new Color(16, 16, 16);
-        newPixels[0][1] = new Color(17, 17, 17);
-        newPixels[0][2] = new Color(18, 18, 18);
+    ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Green, "example",
+        "example-green");
+    command.execute();
+    Image commandImage = this.store.retrieve("example-green");
 
-        newPixels[1][0] = new Color(17, 17, 17);
-        newPixels[1][1] = new Color(18, 18, 18);
-        newPixels[1][2] = new Color(18, 18, 18);
-
-        newPixels[2][0] = new Color(18, 18, 18);
-        newPixels[2][1] = new Color(18, 18, 18);
-        newPixels[2][2] = new Color(18, 18, 18);
-
-      }
-    }
-    assertArrayEquals(newPixels, store.retrieve(newFileName).getPixels());
+    assertArrayEquals(macroImage.getPixels(), commandImage.getPixels());
   }
 
   @Test
   public void testVisualizeBlue() {
-    Appendable appendable = new StringBuilder();
-    ImageProcessorView view = new ImageProcessorViewImpl(appendable);
-    StoredImages store = new StoredImagesImpl();
-    String fileName = "ExampleImage.ppm";
-    String newFileName = "BlueVisualizedImage.ppm";
-    store.add(fileName, this.beforeImage, true);
-    ImageProcessorCmd visualizeBlue = new VisualizeCmd(view, store, Channel.Blue, fileName,
-        newFileName);
-    visualizeBlue.execute();
+    ImageTransformation macro = new Visualize(Channel.Blue);
+    Image macroImage = macro.transform(this.beforeImage);
 
-    Color[][] newPixels = new Color[3][3];
-    for (int i = 0; i < newPixels.length; i++) {
-      for (int j = 0; j < newPixels[0].length; j++) {
-        newPixels[0][0] = new Color(216, 216, 216);
-        newPixels[0][1] = new Color(219, 219, 219);
-        newPixels[0][2] = new Color(222, 222, 222);
+    ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Blue, "example",
+        "example-blue");
+    command.execute();
+    Image commandImage = this.store.retrieve("example-blue");
 
-        newPixels[1][0] = new Color(219, 219, 219);
-        newPixels[1][1] = new Color(224, 224, 224);
-        newPixels[1][2] = new Color(227, 227, 227);
-
-        newPixels[2][0] = new Color(222, 222, 222);
-        newPixels[2][1] = new Color(227, 227, 227);
-        newPixels[2][2] = new Color(231, 231, 231);
-
-      }
-    }
-    assertArrayEquals(newPixels, store.retrieve(newFileName).getPixels());
+    assertArrayEquals(macroImage.getPixels(), commandImage.getPixels());
   }
 
   @Test
   public void testVisualizeLuma() {
-    Appendable appendable = new StringBuilder();
-    ImageProcessorView view = new ImageProcessorViewImpl(appendable);
-    StoredImages store = new StoredImagesImpl();
-    String fileName = "ExampleImage.ppm";
-    String newFileName = "LumaVisualizedImage.ppm";
-    store.add(fileName, this.beforeImage, true);
-    ImageProcessorCmd visualizeLuma = new VisualizeCmd(view, store, Channel.Luma, fileName,
-        newFileName);
-    visualizeLuma.execute();
+    ImageTransformation macro = new Visualize(Channel.Luma);
+    Image macroImage = macro.transform(this.beforeImage);
 
-    Color[][] newPixels = new Color[3][3];
-    for (int i = 0; i < newPixels.length; i++) {
-      for (int j = 0; j < newPixels[0].length; j++) {
-        newPixels[0][0] = new Color(54, 54, 54);
-        newPixels[0][1] = new Color(52, 52, 52);
-        newPixels[0][2] = new Color(51, 51, 51);
+    ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Luma, "example",
+        "example-luma");
+    command.execute();
+    Image commandImage = this.store.retrieve("example-luma");
 
-        newPixels[1][0] = new Color(52, 52, 52);
-        newPixels[1][1] = new Color(49, 49, 49);
-        newPixels[1][2] = new Color(47, 47, 47);
-
-        newPixels[2][0] = new Color(51, 51, 51);
-        newPixels[2][1] = new Color(47, 47, 47);
-        newPixels[2][2] = new Color(42, 42, 42);
-
-      }
-    }
-    assertArrayEquals(newPixels, store.retrieve(newFileName).getPixels());
+    assertArrayEquals(macroImage.getPixels(), commandImage.getPixels());
   }
 
   @Test
   public void testVisualizeValue() {
-    Appendable appendable = new StringBuilder();
-    ImageProcessorView view = new ImageProcessorViewImpl(appendable);
-    StoredImages store = new StoredImagesImpl();
-    String fileName = "ExampleImage.ppm";
-    String newFileName = "ValueVisualizedImage.ppm";
-    store.add(fileName, this.beforeImage, true);
-    ImageProcessorCmd visualizeValue = new VisualizeCmd(view, store, Channel.Value, fileName,
-        newFileName);
-    visualizeValue.execute();
+    ImageTransformation macro = new Visualize(Channel.Value);
+    Image macroImage = macro.transform(this.beforeImage);
 
-    Color[][] newPixels = new Color[3][3];
-    for (int i = 0; i < newPixels.length; i++) {
-      for (int j = 0; j < newPixels[0].length; j++) {
-        newPixels[0][0] = new Color(216, 216, 216);
-        newPixels[0][1] = new Color(219, 219, 219);
-        newPixels[0][2] = new Color(222, 222, 222);
-        newPixels[1][0] = new Color(219, 219, 219);
-        newPixels[1][1] = new Color(224, 224, 224);
-        newPixels[1][2] = new Color(227, 227, 227);
-        newPixels[2][0] = new Color(222, 222, 222);
-        newPixels[2][1] = new Color(227, 227, 227);
-        newPixels[2][2] = new Color(231, 231, 231);
+    ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Value, "example",
+        "example-value");
+    command.execute();
+    Image commandImage = this.store.retrieve("example-value");
 
-      }
-    }
-    assertArrayEquals(newPixels, store.retrieve(newFileName).getPixels());
+    assertArrayEquals(macroImage.getPixels(), commandImage.getPixels());
   }
 
   @Test
   public void testVisualizeIntensity() {
-    Appendable appendable = new StringBuilder();
-    ImageProcessorView view = new ImageProcessorViewImpl(appendable);
-    StoredImages store = new StoredImagesImpl();
-    String fileName = "ExampleImage.ppm";
-    String newFileName = "IntensityVisualizedImage.ppm";
-    store.add(fileName, this.beforeImage, true);
-    ImageProcessorCmd visualizeIntensity = new VisualizeCmd(view, store, Channel.Intensity,
-        fileName, newFileName);
-    visualizeIntensity.execute();
+    ImageTransformation macro = new Visualize(Channel.Intensity);
+    Image macroImage = macro.transform(this.beforeImage);
 
-    Color[][] newPixels = new Color[3][3];
-    for (int i = 0; i < newPixels.length; i++) {
-      for (int j = 0; j < newPixels[0].length; j++) {
-        newPixels[0][0] = new Color(120, 120, 120);
-        newPixels[0][1] = new Color(116, 116, 116);
-        newPixels[0][2] = new Color(115, 115, 115);
-        newPixels[1][0] = new Color(116, 116, 116);
-        newPixels[1][1] = new Color(113, 113, 113);
-        newPixels[1][2] = new Color(109, 109, 109);
-        newPixels[2][0] = new Color(115, 115, 115);
-        newPixels[2][1] = new Color(109, 109, 109);
-        newPixels[2][2] = new Color(103, 103, 103);
+    ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Intensity,
+        "example", "example-intensity");
+    command.execute();
+    Image commandImage = this.store.retrieve("example-intensity");
 
-      }
-    }
-    assertArrayEquals(newPixels, store.retrieve(newFileName).getPixels());
+    assertArrayEquals(macroImage.getPixels(), commandImage.getPixels());
+  }
+
+  @Test
+  public void testBlur() {
+    ImageTransformation macro = new Blur();
+    Image macroImage = macro.transform(this.beforeImage);
+
+    ImageProcessorCmd command = new FilterCmd(this.view, this.store, FilterType.Blur, "example",
+        "example-blur");
+    command.execute();
+    Image commandImage = this.store.retrieve("example-blur");
+
+    assertArrayEquals(macroImage.getPixels(), commandImage.getPixels());
+  }
+
+  @Test
+  public void testSharpen() {
+    ImageTransformation macro = new Sharpen();
+    Image macroImage = macro.transform(this.beforeImage);
+
+    ImageProcessorCmd command = new FilterCmd(this.view, this.store, FilterType.Sharpen, "example",
+        "example-sharp");
+    command.execute();
+    Image commandImage = this.store.retrieve("example-sharp");
+
+    assertArrayEquals(macroImage.getPixels(), commandImage.getPixels());
+  }
+
+  @Test
+  public void testGreyscale() {
+    ImageTransformation macro = new Greyscale();
+    Image macroImage = macro.transform(this.beforeImage);
+
+    ImageProcessorCmd command = new FilterCmd(this.view, this.store, FilterType.Greyscale,
+        "example", "example-greyscale");
+    command.execute();
+    Image commandImage = this.store.retrieve("example-greyscale");
+
+    assertArrayEquals(macroImage.getPixels(), commandImage.getPixels());
+  }
+
+  @Test
+  public void testSepia() {
+    ImageTransformation macro = new Sepia();
+    Image macroImage = macro.transform(this.beforeImage);
+
+    ImageProcessorCmd command = new FilterCmd(this.view, this.store, FilterType.Sepia, "example",
+        "example-sepia");
+    command.execute();
+    Image commandImage = this.store.retrieve("example-sepia");
+
+    assertArrayEquals(macroImage.getPixels(), commandImage.getPixels());
   }
 
 }

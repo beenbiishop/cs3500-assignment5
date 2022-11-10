@@ -101,6 +101,18 @@ public class ImageProcessorViewImplTest {
     sb.append("* \"vertical-flip\" <filename> <new filename> - vertically flips an image");
     sb.append(" to a new image");
     sb.append(System.lineSeparator());
+    sb.append("* \"greyscale\" <filename> <new filename> - transforms an image to a new");
+    sb.append(" greyscale filtered image");
+    sb.append(System.lineSeparator());
+    sb.append("* \"sepia\" <filename> <new filename> - transforms an image to a new");
+    sb.append(" sepia filtered image");
+    sb.append(System.lineSeparator());
+    sb.append("* \"blur\" <filename> <new filename> - transforms an image to a new");
+    sb.append(" blurred image");
+    sb.append(System.lineSeparator());
+    sb.append("* \"sharpen\" <filename> <new filename> - transforms an image to a new");
+    sb.append(" sharpened image");
+    sb.append(System.lineSeparator());
     assertEquals(sb.toString(), this.appendable.toString());
   }
 

@@ -14,7 +14,6 @@ import model.ImageImpl;
  * Implements the {@code ImageFileHandler} interface for converting PPM image files into
  * {@code Image} objects, and vice versa.
  */
-// TODO: Document slight fixes (closing scanner, check if file is empty)
 public class ImagePPMHandler implements ImageFileHandler {
 
   @Override

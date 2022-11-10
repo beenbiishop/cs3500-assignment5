@@ -5,8 +5,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.awt.Color;
+import model.transformations.Blur;
 import model.transformations.Brightness;
+import model.transformations.Greyscale;
 import model.transformations.HorizontalFlip;
+import model.transformations.Sepia;
+import model.transformations.Sharpen;
 import model.transformations.VerticalFlip;
 import model.transformations.Visualize;
 import model.transformations.Visualize.Channel;
@@ -232,12 +236,12 @@ public class ImageTransformationTest {
     this.transformedPixels[0][2] = new Color(51, 51, 51);
 
     this.transformedPixels[1][0] = new Color(52, 52, 52);
-    this.transformedPixels[1][1] = new Color(49, 49, 49);
+    this.transformedPixels[1][1] = new Color(50, 50, 50);
     this.transformedPixels[1][2] = new Color(47, 47, 47);
 
     this.transformedPixels[2][0] = new Color(51, 51, 51);
     this.transformedPixels[2][1] = new Color(47, 47, 47);
-    this.transformedPixels[2][2] = new Color(42, 42, 42);
+    this.transformedPixels[2][2] = new Color(43, 43, 43);
 
     assertArrayEquals(this.transformedPixels, this.transformedImage.getPixels());
   }
@@ -266,14 +270,90 @@ public class ImageTransformationTest {
     this.transformedImage = this.transformation.transform(this.startImage);
 
     this.transformedPixels[0][0] = new Color(120, 120, 120);
-    this.transformedPixels[0][1] = new Color(116, 116, 116);
+    this.transformedPixels[0][1] = new Color(117, 117, 117);
     this.transformedPixels[0][2] = new Color(115, 115, 115);
-    this.transformedPixels[1][0] = new Color(116, 116, 116);
+    this.transformedPixels[1][0] = new Color(117, 117, 117);
     this.transformedPixels[1][1] = new Color(113, 113, 113);
-    this.transformedPixels[1][2] = new Color(109, 109, 109);
+    this.transformedPixels[1][2] = new Color(110, 110, 110);
     this.transformedPixels[2][0] = new Color(115, 115, 115);
-    this.transformedPixels[2][1] = new Color(109, 109, 109);
+    this.transformedPixels[2][1] = new Color(110, 110, 110);
     this.transformedPixels[2][2] = new Color(103, 103, 103);
+
+    assertArrayEquals(this.transformedPixels, this.transformedImage.getPixels());
+  }
+
+  @Test
+  public void testBlur() {
+    this.transformation = new Blur();
+    this.transformedImage = this.transformation.transform(this.startImage);
+
+    this.transformedPixels[0][0] = new Color(121, 17, 218);
+    this.transformedPixels[0][1] = new Color(111, 17, 220);
+    this.transformedPixels[0][2] = new Color(102, 18, 223);
+    this.transformedPixels[1][0] = new Color(111, 17, 220);
+    this.transformedPixels[1][1] = new Color(99, 18, 223);
+    this.transformedPixels[1][2] = new Color(87, 18, 226);
+    this.transformedPixels[2][0] = new Color(102, 18, 223);
+    this.transformedPixels[2][1] = new Color(87, 18, 226);
+    this.transformedPixels[2][2] = new Color(72, 18, 229);
+
+    assertArrayEquals(this.transformedPixels, this.transformedImage.getPixels());
+  }
+
+  @Test
+  public void testSharpen() {
+    this.transformation = new Sharpen();
+    this.transformedImage = this.transformation.transform(this.startImage);
+
+    this.transformedPixels[0][0] = new Color(146, 15, 211);
+    this.transformedPixels[0][1] = new Color(125, 17, 217);
+    this.transformedPixels[0][2] = new Color(108, 19, 222);
+    this.transformedPixels[1][0] = new Color(125, 17, 217);
+    this.transformedPixels[1][1] = new Color(97, 18, 224);
+    this.transformedPixels[1][2] = new Color(71, 19, 230);
+    this.transformedPixels[2][0] = new Color(108, 19, 222);
+    this.transformedPixels[2][1] = new Color(71, 19, 230);
+    this.transformedPixels[2][2] = new Color(33, 19, 238);
+
+    assertArrayEquals(this.transformedPixels, this.transformedImage.getPixels());
+  }
+
+  @Test
+  public void testGreyscale() {
+    this.transformation = new Greyscale();
+    this.transformedImage = this.transformation.transform(this.startImage);
+
+    this.transformedPixels[0][0] = new Color(54, 54, 54);
+    this.transformedPixels[0][1] = new Color(52, 52, 52);
+    this.transformedPixels[0][2] = new Color(51, 51, 51);
+
+    this.transformedPixels[1][0] = new Color(52, 52, 52);
+    this.transformedPixels[1][1] = new Color(50, 50, 50);
+    this.transformedPixels[1][2] = new Color(47, 47, 47);
+
+    this.transformedPixels[2][0] = new Color(51, 51, 51);
+    this.transformedPixels[2][1] = new Color(47, 47, 47);
+    this.transformedPixels[2][2] = new Color(43, 43, 43);
+
+    assertArrayEquals(this.transformedPixels, this.transformedImage.getPixels());
+  }
+
+  @Test
+  public void testSepia() {
+    this.transformation = new Sepia();
+    this.transformedImage = this.transformation.transform(this.startImage);
+
+    this.transformedPixels[0][0] = new Color(103, 92, 72);
+    this.transformedPixels[0][1] = new Color(99, 88, 69);
+    this.transformedPixels[0][2] = new Color(97, 86, 67);
+
+    this.transformedPixels[1][0] = new Color(99, 88, 69);
+    this.transformedPixels[1][1] = new Color(94, 84, 65);
+    this.transformedPixels[1][2] = new Color(90, 80, 62);
+
+    this.transformedPixels[2][0] = new Color(97, 86, 67);
+    this.transformedPixels[2][1] = new Color(90, 80, 62);
+    this.transformedPixels[2][2] = new Color(81, 72, 56);
 
     assertArrayEquals(this.transformedPixels, this.transformedImage.getPixels());
   }

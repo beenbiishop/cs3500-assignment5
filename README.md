@@ -6,44 +6,112 @@ _Smita Rosemary and Ben Bishop – CS3500 Fall 2022, Northeastern University_
 
 This project represents an Image Processor that allows you to manipulate and enhance a given image.
 
-The Image Processor allows a user to load in Image into the program, save it, and apply
+The Image Processor allows a user to load an Image into the program, save it, and apply
 transformations such as:
 
 * Visualizing the red, blue, green, alpha, luma, or intensity channels of each pixel in an image as
   a greyscale image
 * Vertically or horizontally flipping an image
 * Brightening or darkening an image
+* Blurring or sharpening an image
+* Filtering an image to greyscale or sepia
 
-The user interacts with the Image Processor through the command line interface (CLI) and can load
-images into the processor, apply transformations, and save transformed images. Currently only `.ppm`
-files are supported.
+The user interacts with the Image Processor through the command line interface (CLI). or they can
+also specify a script file to run as a command line argument, which will run the script and exit the
+program. More details on interacting with the program can be found in the [USEME.md](USEME.md) file.
+
+The program currently supports "PPM" images and any image type supported by the Java ImageIO
+library. We guarantee support for "PNG", "JPG/JPEG", and "BMP" images. The program will
+automatically detect the format to save to/load from based on the file extension.
+
+We have provided two test images located in the `res` folder named `ExampleImage.ppm`
+and `ExampleImage2.png`. We have also processed this image with all available commands to visualize
+transformations without running the program and saved them to the subfolder `res/processed`
+. `ExampleImage.ppm` was created by Smita Rosemary, and has been used with her
+permission. `ExampleImage2.png` was created by Ben Bishop, and has been used with his permission.
 
 ## How to Use
 
-Upon launch, the user will be shown a welcome message, with the option to "quit" the program or view
-a "menu" of available commands. The user can enter the command `quit` at any time to exit the
-program.
+Instructions on how to use the program can be found in the [USEME.md](USEME.md) file.
 
-**All available commands are listed below:**
+## Changelog
 
-* "quit" - _quits the program_
-* "menu" - _displays the menu of commands_
-* "load" <path> <filename> - _loads an image (identified by given name) into the processor_
-* "save" <path> <filename> - _saves an image to an output file_
-* "visualize-`<component>`" `<filename>` `<new filename>` - _transforms an image to a new greyscale
-  image using a chosen component_
-    * `<component>` can be "red", "green", "blue", "value", "intensity", or "luma"
-* "brighten" `<amount>` `<filename>` `<new filename>` - _transforms an image to a new image
-  brightened by an amount_
-* "darken" `<amount>` `<filename>` `<new filename>` - _transforms an image to a new image darkened
-  by an amount_
-* "horizontal-flip" `<filename>` `<new filename>` - _horizontally flips an image to a new image_
-* "vertical-flip" `<filename>` `<new filename>` - _vertically flips an image to a new image_
+### Assignment 5 (11/10/2022)
 
-We have provided a test image located in the `res` folder named `ExampleImage.ppm`. We have also
-processed this image with all available commands to visualize transformations without running the
-program and saved them to the subfolder `res/processed`. `ExampleImage.ppm` was created by Smita
-Rosemary, and has been used with her permission.
+_Second version. Retained all existing functionality, and added support for new transformations and
+the ability to run from a script file._
+
+#### Changes
+
+* Added support for blurring, sharpening, and applying a sepia or greyscale filter to an image.
+    * Added more implementations of the `ImageTransformation` interface in the model (`Blur`
+      , `Sharpen`, `Sepia`, and `Greyscale`) to apply these filters to `Image`s.
+    * Added a new implementation of the `ImageProcessorCmd` interface in the controller
+      (`FilterCmd`) to handle the execution of the `blur`, `sharpen`, `sepia`, and `greyscale`
+      commands.
+    * Modified the `addCommands` method in the `ImageProcessorControllerImpl` class to add the four
+      new commands to the map of supported commands.
+    * Updated the `renderMenu` method in the `ImageProcessorViewImpl` to include the new filters in
+      the menu.
+    * Added new test methods in both the `ImageControllerTest` and `ImageTransformationTest` classes
+      to test the new commands.
+    * Added new example images in the `res/processed` folder to demonstrate the new filters.
+* Added a new higher-resolution example image in the `res` folder (`ExampleImage2.png`) to make
+  visualization of the new filters easier.
+* Added support for loading and saving images from more conventional file formats
+    * Added a new implementation of the `ImageFileHandler` interface in the
+      controller (`ImageIOHandler`) to handle loading and saving images using the Java ImageIO
+      library. This library supports a wide variety of image formats, including "png", "jpg", "jpeg"
+      , and "bmp". These four formats are guaranteed to be supported by the program, but others may
+      be as well.
+    * Modified the `LoadCmd` and `SaveCmd` classes to check the file format of the image to be
+      loaded/saved and use the `ImageIOHandler` if it is not a "ppm" image.
+    * Added new test methods in the `ImageControllerTest` class to test loading/saving images using
+      the new file formats.
+* Added support for loading and running a script file as a command line option.
+    * Modified the `ImageProcessorRunner` class to check for the presence of
+      the `-script <script text file>` command line option, and fallback to the standard CLI if it
+      is not present.
+* Updated the test methods in the `ImageProcessorViewImplTest` class to ensure the new menu is
+  displayed.
+* Added support for running the program from a JAR file (see [USEME.md](USEME.md) for details).
+    * Added a new `MANIFEST.MF` file to the `META-INF` folder to specify the main class of the
+      program.
+    * Built the program into a JAR file located at `res/ImageProcessor.jar`.
+* Updated the `README.md` file to include more information about the image processor and the new
+  features implemented in this version.
+* Created a new `USEME.md` file to document how to use the program.
+
+#### Bug Fixes
+
+* `ImagePPMHandler`
+    * Fixed that the `process` method would throw an exception if the file was empty.
+    * Fixed that the `process` method did not close scanners it opened.
+* `Visualize`
+    * Replaced typecasting with rounding in the `transform` method to result in more accurate
+      transformations.
+* Cleaned up JavaDoc comments to be more consistent and accurate.
+* Cleaned up error messages to be more consistent and accurate.
+
+### Assignment 4 (11/4/2022)
+
+_Initial version. Included the following initial features:_
+
+* Use the image processor within the terminal
+* Load an image into the program
+* Save an image from the program
+* Brighten or darken an image
+* Flip an image horizontally or vertically
+* Visualize the red, blue, green, alpha, luma, or intensity channels of each pixel in an image as a
+  greyscale image
+* View a menu of commands
+* Transform multiple images at once
+
+## Class Diagram
+
+To more easily visualize these classes, we have provided a class diagram below:
+
+![Class Diagram](diagram.png)
 
 ## Class Overview
 
@@ -108,7 +176,7 @@ Rosemary, and has been used with her permission.
     * `StoredImages` : Represents a collection of  `Image`s that have been loaded into the program
       by the user, identified by the image's file name selected by the user.
         * Implementations:
-            * StoredImagesImpl` : Implements the `StoredImages` interface. The stored images are
+            * `StoredImagesImpl` : Implements the `StoredImages` interface. The stored images are
               represented by a Map<String, Image>, the string representing a fileName.
 
 ### View
@@ -124,9 +192,3 @@ Rosemary, and has been used with her permission.
 
 * `ImageProcessorRunner` :  Contains the main method which runs the image processor in the terminal
   for the user.
-
-## Class Diagram
-
-To more easily visualize these classes, we have provided a class diagram below:
-
-![Class Diagram](diagram.png)

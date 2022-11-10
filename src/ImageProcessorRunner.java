@@ -1,5 +1,8 @@
 import controller.ImageProcessorController;
 import controller.ImageProcessorControllerImpl;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import model.StoredImages;
 import model.StoredImagesImpl;
@@ -11,13 +14,23 @@ import view.ImageProcessorViewImpl;
  */
 public final class ImageProcessorRunner {
 
-  /**
-   * Initiates a new image processor instance for the user.
-   */
   public static void main(String[] args) {
+    Readable input = null;
 
-    // Set the input stream
-    Readable input = new InputStreamReader(System.in);
+    // If the user provides a script file, use that as the input, otherwise use the console
+    if (args.length == 0) {
+      input = new InputStreamReader(System.in);
+    } else if (args.length == 2 && args[0].equals("-script")) {
+      try {
+        input = new BufferedReader(new FileReader(args[1]));
+      } catch (FileNotFoundException e) {
+        System.out.println("Log file not found.");
+        return;
+      }
+    } else {
+      System.out.println("Invalid arguments provided.");
+      return;
+    }
 
     // Initialize the view given the output stream appendable
     ImageProcessorView view = new ImageProcessorViewImpl(System.out);

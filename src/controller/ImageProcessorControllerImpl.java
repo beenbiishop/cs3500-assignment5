@@ -29,7 +29,6 @@ import view.ImageProcessorView;
  * command will overwrite the existing file with the new image.
  * </p>
  */
-// TODO: Update JavaDoc with new commands
 public class ImageProcessorControllerImpl implements ImageProcessorController {
 
   private final ImageProcessorView view;
@@ -89,7 +88,6 @@ public class ImageProcessorControllerImpl implements ImageProcessorController {
    * Adds all supported commands and the lambda functions to create the command objects to this
    * controller object's map of valid commands.
    */
-  // TODO: Add to readme added commands
   private void addCommands() {
     this.commands.put("menu", (Scanner s) -> new MenuCmd(this.view));
     this.commands.put("load",

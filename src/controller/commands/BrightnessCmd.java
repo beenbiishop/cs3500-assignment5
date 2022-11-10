@@ -53,6 +53,7 @@ public class BrightnessCmd implements ImageProcessorCmd {
     Image processed = brightness.transform(retrieved);
     this.store.add(this.newFileName, processed, true);
     this.view.renderMessage(
-        "Image " + this.fileName + " has been brightened" + System.lineSeparator() + "Command: ");
+        "The brightness of \"" + this.fileName + "\" has been adjusted by " + this.amount
+            + System.lineSeparator() + "Command: ");
   }
 }

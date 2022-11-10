@@ -41,14 +41,15 @@ public class Visualize implements ImageTransformation {
             newValue = pixel.getBlue();
             break;
           case Luma:
-            newValue = ((int) (0.2126 * pixel.getRed() + 0.7152 * pixel.getGreen()
-                + 0.0722 * pixel.getBlue()));
+            newValue = Math.toIntExact(Math.round(
+                0.2126 * pixel.getRed() + 0.7152 * pixel.getGreen() + 0.0722 * pixel.getBlue()));
             break;
           case Value:
             newValue = Math.max(pixel.getRed(), Math.max(pixel.getBlue(), pixel.getGreen()));
             break;
           case Intensity:
-            newValue = (pixel.getRed() + pixel.getBlue() + pixel.getGreen()) / 3;
+            double avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3.0;
+            newValue = Math.toIntExact(Math.round(avg));
             break;
           default:
             // should never happen

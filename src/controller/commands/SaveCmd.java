@@ -39,7 +39,6 @@ public class SaveCmd implements ImageProcessorCmd {
     this.fileName = fileName.toLowerCase();
   }
 
-  // TODO: Document changes to support new file types
   @Override
   public void execute() throws IllegalArgumentException {
     ImageFileHandler handler;
