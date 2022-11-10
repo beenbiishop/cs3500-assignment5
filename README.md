@@ -129,27 +129,28 @@ To more easily visualize these classes, we have provided a class diagram below:
       command is executed by calling the `execute` method, and implemented subclasses of this
       interface will handle the execution of the command
         * Implementations:
+            * `MenuCmd` : Implements the `ImageProcessorCmd` and represents the `menu` command
+              offered by the processor.
             * `LoadCmd` : Implements the `ImageProcessorCmd` and represents the `load` command
               offered by the processor.
-                * `MenuCmd` : Implements the `ImageProcessorCmd` and represents the `menu` command
-                  offered by the processor.
-                * `SaveCmd` : Implements the `ImageProcessorCmd` and represents the `save` command
-                  offered by the processor.
-                * `BrightnessCmd` : Implements the `ImageProcessorCmd` and represents the `brighten`
-                  and `darken`
-                  command offered by the processor.
-                * `HorizontalFlipCmd` : Implements the `ImageProcessorCmd` and represents
-                  the `horizontal-flip`
-                  command offered by the processor.
-                * `VerticalFlipCmd` : Implements the `ImageProcessorCmd` and represents
-                  the `vertical-flip` command offered by the processor.
-                * `VisualizeCmd` : Implements the `ImageProcessorCmd` and represents
-                  the `visualize-<componenet>`
-                  command offered by the processor.
+            * `SaveCmd` : Implements the `ImageProcessorCmd` and represents the `save` command
+              offered by the processor.
+            * `BrightnessCmd` : Implements the `ImageProcessorCmd` and represents the `brighten`
+              and `darken` command offered by the processor.
+            * `HorizontalFlipCmd` : Implements the `ImageProcessorCmd` and represents
+              the `horizontal-flip` command offered by the processor.
+            * `VerticalFlipCmd` : Implements the `ImageProcessorCmd` and represents
+              the `vertical-flip` command offered by the processor.
+            * `VisualizeCmd` : Implements the `ImageProcessorCmd` and represents
+              the `visualize-<componenet>` command offered by the processor.
+            * `FilterCmd` : Implements the `ImageProcessorCmd` and represents the `blur`, `sharpen`
+              , `sepia`, and `greyscale` commands offered by the processor.
     * `ImageFileHandler` :  Represents a model used to convert image files into `Image` objects.
         * Implementations:
             * `ImagePPMHandler` : Implements the `ImageFileHandler` interface for converting PPM
               image files into `Image` objects, and vice versa.
+            * `ImageIOHandler` : Implements the `ImageFileHandler` interface for converting images
+              into `Image` objects using the Java ImageIO library.
 
 ### Model
 
@@ -163,21 +164,27 @@ To more easily visualize these classes, we have provided a class diagram below:
         * Implementations:
             * `Brightness` : Implements the `ImageTransformation` interface and represents a macro
               that adjusts the brightness of an image, both up the scale and down.
-                * `HorizontalFlip` : Implements the `ImageTransformation` interface and represents a
-                  macro that flips an image along the horizontal axis.
-                * `VerticalFlip`: Implements the `ImageTransformation` interface and represents a
-                  macro that flips an image along the vertical axis.
-                * `Visualize` : Implements the `ImageTransformation` interface and represents a
-                  macro that transforms the images to visualize the greyscale image by one of the
-                  following color components : `visualize-red`, `visualize-blue`, `visualize-green`
-                  , `visualize-value`,
-                  `visualize-intensity`, `visualize-luma`.
+            * `HorizontalFlip` : Implements the `ImageTransformation` interface and represents a
+              macro that flips an image along the horizontal axis.
+            * `VerticalFlip`: Implements the `ImageTransformation` interface and represents a macro
+              that flips an image along the vertical axis.
+            * `Visualize` : Implements the `ImageTransformation` interface and represents a macro
+              that transforms the images to visualize the greyscale image by one of the following
+              color components : `Red`, `Blue`, `Green`, `Value`, `Luma`, or `Intensity`.
+            * `Blur` : Implements the `ImageTransformation` interface and represents a macro that
+              blurs an image.
+            * `Sharpen` : Implements the `ImageTransformation` interface and represents a macro that
+              sharpens an image.
+            * `Sepia` : Implements the `ImageTransformation` interface and represents a macro that
+              applies a sepia filter to an image.
+            * `Greyscale` : Implements the `ImageTransformation` interface and represents a macro
+              that applies a greyscale filter to an image.
 
     * `StoredImages` : Represents a collection of  `Image`s that have been loaded into the program
       by the user, identified by the image's file name selected by the user.
         * Implementations:
             * `StoredImagesImpl` : Implements the `StoredImages` interface. The stored images are
-              represented by a Map<String, Image>, the string representing a fileName.
+              represented by a `Map<String, Image>`, the string representing a fileName.
 
 ### View
 
@@ -191,4 +198,5 @@ To more easily visualize these classes, we have provided a class diagram below:
 ### Main Class
 
 * `ImageProcessorRunner` :  Contains the main method which runs the image processor in the terminal
-  for the user.
+  for the user. The class will parse any command line arguments and use them to initialize the
+  controller and view.

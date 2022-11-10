@@ -14,6 +14,11 @@ import view.ImageProcessorViewImpl;
  */
 public final class ImageProcessorRunner {
 
+  /**
+   * Initiates a new image processor instance for the user.
+   *
+   * @param args the arguments taken in by the main method
+   */
   public static void main(String[] args) {
     Readable input = null;
 
