@@ -351,7 +351,6 @@ public class ImageControllerTest {
   @Test
   public void testSavePNG() {
     String filePath = "res/ExampleImage2.png"; // relative to the project root
-    ImageFileHandler pngHandler = new ImageIOHandler();
 
     ImageProcessorCmd command1 = new LoadCmd(this.view, this.store, filePath,
             "ExampleImage2");
@@ -369,7 +368,6 @@ public class ImageControllerTest {
   public void testSaveDiffFile() {
     String filePath1 = "res/ExampleImage2.png"; // relative to the project root
     String filePath2 = "res/ExampleImage2.ppm"; // relative to the project root
-    ImageFileHandler pngHandler = new ImageIOHandler();
 
     ImageProcessorCmd command1 = new LoadCmd(this.view, this.store, filePath1,
             "ExampleImage2");
@@ -381,5 +379,45 @@ public class ImageControllerTest {
     assertTrue(this.appendable.toString().contains("ExampleImage2.ppm"));
 
   }
+
+
+  @Test
+  public void testIOHandlerProcess() {
+
+    String filePath = "res/ExampleImage2.png"; // relative to the project root
+
+    ImageProcessorCmd command1 = new LoadCmd(this.view, this.store, filePath,
+            "ExampleImage2");
+    command1.execute();
+    ImageProcessorCmd command2 = new SaveCmd(this.view, this.store, filePath,
+            "ExampleImage2");
+    command2.execute();
+
+
+    ImageFileHandler ioHandler = new ImageIOHandler();
+
+    Image retrievedImage = this.store.retrieve("ExampleImage2");
+
+    assertArrayEquals(retrievedImage.getPixels(), ioHandler.process(filePath).getPixels());
+  }
+
+  @Test
+  public void testIOHandlerExport() {
+    String filePath = "res/ExampleImage2.png";
+    String filePath2 = "res/exImage2.png";
+
+    ImageFileHandler ioHandler = new ImageIOHandler();
+    Image processedImage = ioHandler.process(filePath);
+
+    ImageFileHandler ioHandler2 = new ImageIOHandler();
+
+
+    ioHandler2.export(processedImage, filePath2);
+    Image exportedImage = ioHandler2.process(filePath2);
+
+    //Checks if the ppmHandler saved the image correctly under the new filePath.
+    assertArrayEquals(processedImage.getPixels(), exportedImage.getPixels());
+  }
+
 
 }
