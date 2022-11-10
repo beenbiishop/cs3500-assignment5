@@ -57,6 +57,7 @@ be added for readability, but will not affect the program's execution.
 4. Copy the `res/ImageProcessor.jar` file to the same directory.
 5. Open a terminal window and navigate to the directory where both files are located.
 6. Enter the command `java -jar ImageProcessor.jar -script <script file name>` to run the program.
+    * _An example script file is provided in the `res` directory (`example-script.txt`)._
 7. The program will execute the commands in the script file, and display the success/failure of each
    command in the terminal window as if you were entering the commands manually.
 
