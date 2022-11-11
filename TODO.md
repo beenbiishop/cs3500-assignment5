@@ -19,9 +19,11 @@
 
 ## Controller
 
-1. [ ] Write tests for loading/saving from different file types
-2. [ ] Write tests for loading as one file type and saving as another
-3. [ ] Write tests for ImageIOHandler class
+1. [x] Write tests for loading/saving from different file types
+
+2. [x] Write tests for loading as one file type and saving as another
+3. [x] Write tests for ImageIOHandler class
+
 4. [x] Write tests for Blur command
 5. [x] Write tests for Sharpen command
 6. [x] Implement Greyscale command
