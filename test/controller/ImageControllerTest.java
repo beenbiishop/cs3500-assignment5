@@ -13,16 +13,13 @@ import controller.commands.LoadCmd;
 import controller.commands.SaveCmd;
 import controller.commands.VerticalFlipCmd;
 import controller.commands.VisualizeCmd;
-
 import java.awt.Color;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import model.Image;
 import model.ImageImpl;
 import model.ImageTransformation;
@@ -37,10 +34,8 @@ import model.transformations.Sharpen;
 import model.transformations.VerticalFlip;
 import model.transformations.Visualize;
 import model.transformations.Visualize.Channel;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import view.ImageProcessorView;
 import view.ImageProcessorViewImpl;
 
@@ -74,7 +69,7 @@ public class ImageControllerTest {
     this.beforeImage = new ImageImpl(pixels);
 
     String userCommandEx1 = "load res/ExampleImage.ppm ExampleImage" + System.lineSeparator()
-            + "brighten 10 ExampleImage BrightenedImage";
+        + "brighten 10 ExampleImage BrightenedImage";
     InputStream targetStreamEx1 = new ByteArrayInputStream(userCommandEx1.getBytes());
     this.in = new InputStreamReader(targetStreamEx1);
     this.appendable = new StringBuilder();
@@ -117,9 +112,9 @@ public class ImageControllerTest {
 
     this.controller1.run();
     assertEquals("The parsed string for a new file's name: exampleimage" + System.lineSeparator()
-            + "The parsed string for the name of the file to modify: exampleimage"
-            + System.lineSeparator() + "The parsed string for a new file's name: brightenedimage"
-            + System.lineSeparator(), log.toString());
+        + "The parsed string for the name of the file to modify: exampleimage"
+        + System.lineSeparator() + "The parsed string for a new file's name: brightenedimage"
+        + System.lineSeparator(), log.toString());
   }
 
   @Test
@@ -180,7 +175,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new BrightnessCmd(this.view, this.store, 10, "example",
-            "example-bright");
+        "example-bright");
     command.execute();
     Image commandImage = this.store.retrieve("example-bright");
 
@@ -193,7 +188,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new HorizontalFlipCmd(this.view, this.store, "example",
-            "example-horizontal");
+        "example-horizontal");
     command.execute();
     Image commandImage = this.store.retrieve("example-horizontal");
 
@@ -206,7 +201,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new VerticalFlipCmd(this.view, this.store, "example",
-            "example-vertical");
+        "example-vertical");
     command.execute();
     Image commandImage = this.store.retrieve("example-vertical");
 
@@ -219,7 +214,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Red, "example",
-            "example-red");
+        "example-red");
     command.execute();
     Image commandImage = this.store.retrieve("example-red");
 
@@ -232,7 +227,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Green, "example",
-            "example-green");
+        "example-green");
     command.execute();
     Image commandImage = this.store.retrieve("example-green");
 
@@ -245,7 +240,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Blue, "example",
-            "example-blue");
+        "example-blue");
     command.execute();
     Image commandImage = this.store.retrieve("example-blue");
 
@@ -258,7 +253,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Luma, "example",
-            "example-luma");
+        "example-luma");
     command.execute();
     Image commandImage = this.store.retrieve("example-luma");
 
@@ -271,7 +266,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Value, "example",
-            "example-value");
+        "example-value");
     command.execute();
     Image commandImage = this.store.retrieve("example-value");
 
@@ -284,7 +279,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new VisualizeCmd(this.view, this.store, Channel.Intensity,
-            "example", "example-intensity");
+        "example", "example-intensity");
     command.execute();
     Image commandImage = this.store.retrieve("example-intensity");
 
@@ -297,7 +292,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new FilterCmd(this.view, this.store, FilterType.Blur, "example",
-            "example-blur");
+        "example-blur");
     command.execute();
     Image commandImage = this.store.retrieve("example-blur");
 
@@ -310,7 +305,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new FilterCmd(this.view, this.store, FilterType.Sharpen, "example",
-            "example-sharp");
+        "example-sharp");
     command.execute();
     Image commandImage = this.store.retrieve("example-sharp");
 
@@ -323,7 +318,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new FilterCmd(this.view, this.store, FilterType.Greyscale,
-            "example", "example-greyscale");
+        "example", "example-greyscale");
     command.execute();
     Image commandImage = this.store.retrieve("example-greyscale");
 
@@ -336,7 +331,7 @@ public class ImageControllerTest {
     Image macroImage = macro.transform(this.beforeImage);
 
     ImageProcessorCmd command = new FilterCmd(this.view, this.store, FilterType.Sepia, "example",
-            "example-sepia");
+        "example-sepia");
     command.execute();
     Image commandImage = this.store.retrieve("example-sepia");
 
@@ -347,8 +342,7 @@ public class ImageControllerTest {
   public void testLoadPNG() {
     String filePath = "res/ExampleImage2.png"; // relative to the project root
 
-    ImageProcessorCmd command = new LoadCmd(this.view, this.store, filePath,
-            "ExampleImage2");
+    ImageProcessorCmd command = new LoadCmd(this.view, this.store, filePath, "ExampleImage2");
     command.execute();
     Image commandImage = this.store.retrieve("ExampleImage2");
 
@@ -361,15 +355,13 @@ public class ImageControllerTest {
     String filePath = "res/ExampleImage2.png"; // relative to the project root
     String filePath2 = "res/exImage2.png"; // relative to the project root
 
-    ImageProcessorCmd command1 = new LoadCmd(this.view, this.store, filePath,
-            "exImage2");
+    ImageProcessorCmd command1 = new LoadCmd(this.view, this.store, filePath, "exImage2");
     command1.execute();
-    ImageProcessorCmd command2 = new SaveCmd(this.view, this.store, filePath2,
-            "exImage2");
+    ImageProcessorCmd command2 = new SaveCmd(this.view, this.store, filePath2, "exImage2");
     command2.execute();
 
-    assertTrue(this.appendable.toString().contains("\" saved successfully as \""
-            + filePath2 + "\""));
+    assertTrue(
+        this.appendable.toString().contains("\" saved successfully as \"" + filePath2 + "\""));
   }
 
   @Test
@@ -377,11 +369,9 @@ public class ImageControllerTest {
     String filePath1 = "res/ExampleImage2.png"; // relative to the project root
     String filePath2 = "res/ExampleImage2.ppm"; // relative to the project root
 
-    ImageProcessorCmd command1 = new LoadCmd(this.view, this.store, filePath1,
-            "exImage2");
+    ImageProcessorCmd command1 = new LoadCmd(this.view, this.store, filePath1, "exImage2");
     command1.execute();
-    ImageProcessorCmd command2 = new SaveCmd(this.view, this.store, filePath2,
-            "exImage2");
+    ImageProcessorCmd command2 = new SaveCmd(this.view, this.store, filePath2, "exImage2");
     command2.execute();
 
     assertTrue(this.appendable.toString().contains("ExampleImage2.ppm"));
@@ -394,13 +384,10 @@ public class ImageControllerTest {
 
     String filePath = "res/ExampleImage2.png"; // relative to the project root
 
-    ImageProcessorCmd command1 = new LoadCmd(this.view, this.store, filePath,
-            "exImage2");
+    ImageProcessorCmd command1 = new LoadCmd(this.view, this.store, filePath, "exImage2");
     command1.execute();
-    ImageProcessorCmd command2 = new SaveCmd(this.view, this.store, filePath,
-            "exImage2");
+    ImageProcessorCmd command2 = new SaveCmd(this.view, this.store, filePath, "exImage2");
     command2.execute();
-
 
     ImageFileHandler ioHandler = new ImageIOHandler();
 
@@ -418,7 +405,6 @@ public class ImageControllerTest {
     Image processedImage = ioHandler.process(filePath);
 
     ImageFileHandler ioHandler2 = new ImageIOHandler();
-
 
     ioHandler2.export(processedImage, filePath2);
     Image exportedImage = ioHandler2.process(filePath2);
@@ -439,15 +425,14 @@ public class ImageControllerTest {
       StoredImages mockStore = new MockStoredImages(log);
       this.controller1 = new ImageProcessorControllerImpl(this.in, this.view, mockStore);
       this.controller1.run();
-      assertEquals("The parsed string for the name of the file to modify: example2"
-                      + System.lineSeparator()
-                      + "The parsed string for the name of the file to modify: example2"
-                      + System.lineSeparator()
-                      + "The parsed string for the name of the file to modify: example2-blur"
-                      + System.lineSeparator()
-                      + "The parsed string for the name of the file to modify: example2-sepia"
-                      + System.lineSeparator()
-              ,log.toString());
+      assertEquals(
+          "The parsed string for the name of the file to modify: example2" + System.lineSeparator()
+              + "The parsed string for the name of the file to modify: example2"
+              + System.lineSeparator()
+              + "The parsed string for the name of the file to modify: example2-blur"
+              + System.lineSeparator()
+              + "The parsed string for the name of the file to modify: example2-sepia"
+              + System.lineSeparator(), log.toString());
 
     } catch (FileNotFoundException ex) {
       try {
